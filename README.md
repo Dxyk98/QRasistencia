@@ -1,0 +1,2 @@
+# QRasistencia
+Proyecto de semestre.
