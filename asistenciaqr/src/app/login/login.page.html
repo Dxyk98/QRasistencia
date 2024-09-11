@@ -13,7 +13,9 @@
             formControlName="email"
             placeholder="Correo@duoc.cl"
             class="custom-placeholder"
-          ></ion-input>
+          >
+            <ion-icon name="at-outline" slot="start"></ion-icon>
+          </ion-input>
         </ion-item>
         <ion-item>
           <ion-input
@@ -21,14 +23,18 @@
             formControlName="password"
             placeholder="Contraseña"
             class="custom-placeholder"
-          ></ion-input>
+          >
+            <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+          </ion-input>
         </ion-item>
         <ion-button expand="block" class="login-button" type="submit"
-          >Ingresar</ion-button
-        >
+          >Ingresar
+          <ion-icon name="log-in-outline" slot="end"></ion-icon>
+        </ion-button>
       </form>
-      <a routerLink="/recuperar" class="forgot-password"
-        >Recuperar contraseña</a
+      <a routerLink="/recuperar" class="forgot-password">
+        <ion-icon name="help-circle-outline"></ion-icon>
+        Recuperar contraseña</a
       >
     </div>
   </div>
