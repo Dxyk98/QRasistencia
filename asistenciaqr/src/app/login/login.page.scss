@@ -8,3 +8,57 @@
 * {
   background: var(--blue);
 }
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: #003057;
+}
+
+.login-box {
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  width: 80%;
+  max-width: 400px;
+}
+
+.logo {
+  width: 250px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+h1 {
+  color: #003057;
+  margin-bottom: 30px;
+}
+
+ion-item {
+  --background: #f4f4f4;
+  --border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+ion-input {
+  --padding-start: 10px;
+}
+
+.login-button {
+  --background: #ffa300;
+  --color: white;
+  margin-top: 20px;
+}
+
+.forgot-password {
+  display: block;
+  margin-top: 20px;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.custom-placeholder {
+  color: #000000;
+}

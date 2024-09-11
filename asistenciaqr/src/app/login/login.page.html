@@ -1,35 +1,35 @@
 <ion-content [fullscreen]="true" class="ion-padding">
-  <div
-    class="container my-5 d-flex flex-column align-items-center justify-content-center"
-  >
-    <form>
-      <div class="logo mb-2">
-        <img src="../../assets/icon/LogoDuoc.png" alt="" />
-      </div>
-      <div class="container p-2">
-        <div class="my-2">
+  <div class="login-container">
+    <div class="login-box">
+      <img
+        src="../../assets/icon/LogoDuoc.png"
+        alt="DuocUC Logo"
+        class="logo"
+      />
+      <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+        <ion-item>
           <ion-input
-            label="Email"
-            label-placement="floating"
-            fill="outline"
-            placeholder="Enter Correo@duoc"
+            type="email"
+            formControlName="email"
+            placeholder="Correo@duoc.cl"
+            class="custom-placeholder"
           ></ion-input>
-        </div>
-        <div class="my-2">
+        </ion-item>
+        <ion-item>
           <ion-input
-            label="Password"
-            label-placement="floating"
-            fill="outline"
-            placeholder="Enter Contraseña"
+            type="password"
+            formControlName="password"
+            placeholder="Contraseña"
+            class="custom-placeholder"
           ></ion-input>
-        </div>
-        <ion-button class="my-2 text-center align-items-center"
+        </ion-item>
+        <ion-button expand="block" class="login-button" type="submit"
           >Ingresar</ion-button
         >
-        <div class="my-1 text-center">
-          <a href="#">Recuperar Contraseña</a>
-        </div>
-      </div>
-    </form>
+      </form>
+      <a routerLink="/recuperar" class="forgot-password"
+        >Recuperar contraseña</a
+      >
+    </div>
   </div>
 </ion-content>
