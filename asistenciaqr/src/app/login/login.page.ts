@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -10,15 +10,23 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  loginForm: FormGroup;
-  allowedEmails: string[] = ['test@duocuc.cl', 'profesor@profesor.duoc.cl']; // Array de correos permitidos
-  allowedPasswords: string[] = ['test12345', 'test6789']; // Array de contraseñas correspondientes a los correos permitidos
+  loginForm!: FormGroup;
+  private readonly allowedCredentials = [
+    { email: 'test@duocuc.cl', password: 'test12345' },
+    { email: 'profesor@profesor.duoc.cl', password: 'test6789' },
+  ];
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private alertController: AlertController
   ) {
+    this.initForm();
+  }
+
+  ngOnInit() {}
+
+  private initForm(): void {
     this.loginForm = this.fb.group({
       email: [
         '',
@@ -34,38 +42,48 @@ export class LoginPage implements OnInit {
     });
   }
 
-  ngOnInit() {}
-
-  allowedEmailValidator(control: { value: string }) {
-    return this.allowedEmails.includes(control.value)
+  private allowedEmailValidator(control: {
+    value: string;
+  }): { [key: string]: boolean } | null {
+    return this.allowedCredentials.some((cred) => cred.email === control.value)
       ? null
       : { notAllowed: true };
   }
 
-  async onSubmit() {
+  async onSubmit(): Promise<void> {
     if (this.loginForm.valid) {
-      const email = this.loginForm.get('email')?.value;
-      const password = this.loginForm.get('password')?.value;
-      const emailIndex = this.allowedEmails.indexOf(email);
+      const { email, password } = this.loginForm.value;
+      const isValidCredential = this.allowedCredentials.some(
+        (cred) => cred.email === email && cred.password === password
+      );
 
-      if (emailIndex !== -1 && this.allowedPasswords[emailIndex] === password) {
+      if (isValidCredential) {
         console.log('Login exitoso');
-        this.router.navigate(['/home']);
+        if (email.endsWith('@duocuc.cl')) {
+          this.router.navigate(['/home']);
+        } else if (email.endsWith('@profesor.duoc.cl')) {
+          this.router.navigate(['/profesor-home']);
+        }
       } else {
-        const alert = await this.alertController.create({
-          header: 'Error',
-          message: 'Credenciales inválidas. Por favor, intente nuevamente.',
-          buttons: ['OK'],
-        });
-        await alert.present();
+        await this.showAlert(
+          'Error',
+          'Credenciales inválidas. Por favor, intente nuevamente.'
+        );
       }
     } else {
-      const alert = await this.alertController.create({
-        header: 'Error',
-        message: 'Por favor, complete todos los campos correctamente.',
-        buttons: ['OK'],
-      });
-      await alert.present();
+      await this.showAlert(
+        'Error',
+        'Por favor, complete todos los campos correctamente.'
+      );
     }
+  }
+
+  private async showAlert(header: string, message: string): Promise<void> {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['OK'],
+    });
+    await alert.present();
   }
 }

@@ -1,14 +1,31 @@
-<ion-content [fullscreen]="true" class="recuperar-container">
+<ion-content [fullscreen]="true" class="ion-padding">
   <div class="recuperar-box">
-    <img src="../../assets/icon/LogoDuoc.png" alt="DuocUC Logo" class="logo" />
-    <h1>Recuperar contraseña</h1>
-    <ion-item>
-      <ion-input
-        type="email"
-        placeholder="Correo@duoc.cl"
-        class="custom-input"
-      ></ion-input>
-    </ion-item>
-    <ion-button expand="block" class="recuperar-button">Recuperar</ion-button>
+    <ion-button class="recuperar-button back-button" routerLink="/login">
+      <ion-icon name="chevron-back-outline" slot="start"></ion-icon>
+      Atrás
+    </ion-button>
+    <div class="recuperar-container">
+      <img
+        src="../../assets/icon/LogoDuoc.png"
+        alt="DuocUC Logo"
+        class="logo"
+      />
+      <h1>Recuperar contraseña</h1>
+      <form (ngSubmit)="onSubmit()" [formGroup]="recuperarForm">
+        <ion-item>
+          <ion-input
+            type="email"
+            placeholder="Correo@duoc.cl"
+            class="custom-input"
+            formControlName="email"
+          >
+            <ion-icon name="at-outline" slot="start"></ion-icon
+          ></ion-input>
+        </ion-item>
+        <ion-button expand="block" class="recuperar-button" type="submit"
+          >Recuperar</ion-button
+        >
+      </form>
+    </div>
   </div>
 </ion-content>
