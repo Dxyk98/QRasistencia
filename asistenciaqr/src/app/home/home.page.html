@@ -1,15 +1,37 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Login
-    </ion-title>
+    <img src="./../assets/icon/LogoDuoc.png" alt="DuocUC Logo" class="logo" />
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Login</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="full-screen-content">
+    <div class="centered-content">
+      <h2 class="text-center mb-4 text-dark">Bienvenido alumno.user</h2>
+      <h3 class="text-center mb-4 text-dark">Clases del día</h3>
+      <div class="mb-3">
+        <select class="form-select">
+          <option>Clase 1</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <select class="form-select">
+          <option>Clase 2</option>
+        </select>
+      </div>
+    </div>
+  </div>
 </ion-content>
+
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="home">
+      <ion-icon name="home-outline"></ion-icon>
+      <ion-label>Inicio</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="qr">
+      <ion-icon name="qr-code-outline"></ion-icon>
+      <ion-label>QR</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
