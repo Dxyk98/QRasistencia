@@ -6,6 +6,7 @@
 
 <ion-content [fullscreen]="true">
   <div
+    *ngIf="isMobile"
     class="message-container text-dark d-flex justify-content-center align-items-center"
     style="height: 100%"
   >
@@ -14,6 +15,12 @@
       la asistencia por celular esta bloqueada profesor, es
       <strong>solo para alumnos</strong>.<br />
       Favor de pasar lista por <strong>computador</strong>.
+    </p>
+  </div>
+
+  <div *ngIf="!isMobile" class="desktop-message-container">
+    <p class="message text-dark text-center">
+      Este es el contenido para dispositivos de escritorio.
     </p>
   </div>
 </ion-content>
