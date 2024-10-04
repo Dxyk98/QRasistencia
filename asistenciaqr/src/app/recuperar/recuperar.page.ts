@@ -58,7 +58,7 @@ export class RecuperarPage implements OnInit {
       if (isValidEmail) {
         console.log('Email válido');
         if (email.endsWith('@duocuc.cl')) {
-          this.router.navigate(['/home']);
+          this.router.navigate(['/home-student']);
         } else if (email.endsWith('@profesor.duoc.cl')) {
           this.router.navigate(['/profesor-home']);
         }

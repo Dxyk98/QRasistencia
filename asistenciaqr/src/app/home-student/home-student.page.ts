@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  selector: 'app-home-student',
+  templateUrl: './home-student.page.html',
+  styleUrls: ['./home-student.page.scss'],
 })
-export class HomePage implements OnInit {
-  isMobile: boolean = false;
+export class HomeStudentPage implements OnInit {
+  isMobile: boolean = true;
 
   constructor(private platform: Platform) {}
 
