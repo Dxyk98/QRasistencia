@@ -5,12 +5,12 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <div *ngIf="isMobile">
-    <div class="full-screen-content">
-      <div class="centered-content">
+  <ion-content *ngIf="isMobile">
+    <ion-content class="full-screen-content">
+      <ion-content class="centered-content">
         <h2 class="text-center mb-4 text-dark">Bienvenido alumno.user</h2>
         <h3 class="text-center mb-4 text-dark">Clases del día</h3>
-        <div class="mb-4">
+        <ion-content class="mb-4">
           <ion-accordion-group>
             <ion-accordion value="first">
               <ion-item slot="header" color="light">
@@ -47,12 +47,12 @@
               </div>
             </ion-accordion>
           </ion-accordion-group>
-        </div>
-      </div>
-    </div>
-  </div>
+        </ion-content>
+      </ion-content>
+    </ion-content>
+  </ion-content>
 
-  <div
+  <ion-content
     *ngIf="!isMobile"
     class="desktop-message-container text-dark d-flex justify-content-center align-items-center"
   >
@@ -62,7 +62,7 @@
       <strong>solo para profesores</strong>.<br />
       Favor de escanear asistencia por <strong>celular</strong>.
     </p>
-  </div>
+  </ion-content>
 </ion-content>
 
 <ion-tabs>
