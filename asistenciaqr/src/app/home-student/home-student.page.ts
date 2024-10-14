@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Platform } from '@ionic/angular';
+import { Platform, IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-home-student',
@@ -16,6 +16,7 @@ export class HomeStudentPage implements OnInit {
       this.platform.is('mobile') ||
       this.platform.is('tablet') ||
       this.isScreenSmall();
+    console.log('isMobile:', this.isMobile);
   }
 
   private isScreenSmall(): boolean {

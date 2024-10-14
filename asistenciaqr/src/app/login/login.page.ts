@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { ReactiveFormsModule } from '@angular/forms';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,8 @@ export class LoginPage implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private returnUser: UserService
   ) {
     this.initForm();
   }
@@ -35,43 +37,29 @@ export class LoginPage implements OnInit {
           Validators.pattern(
             '^[a-zA-Z0-9._%+-]+@(duocuc.cl|profesor.duoc.cl)$'
           ),
-          this.allowedEmailValidator.bind(this),
         ],
       ],
       password: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
 
-  private allowedEmailValidator(control: {
-    value: string;
-  }): { [key: string]: boolean } | null {
-    return this.allowedCredentials.some((cred) => cred.email === control.value)
-      ? null
-      : { notAllowed: true };
-  }
-
-  async onSubmit(): Promise<void> {
+  onLogin() {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
-      const isValidCredential = this.allowedCredentials.some(
-        (cred) => cred.email === email && cred.password === password
-      );
-
-      if (isValidCredential) {
-        console.log('Login exitoso');
+      if (this.returnUser.validarServicio(email, password)) {
         if (email.endsWith('@duocuc.cl')) {
           this.router.navigate(['/home-student']);
         } else if (email.endsWith('@profesor.duoc.cl')) {
           this.router.navigate(['/profesor-home']);
         }
       } else {
-        await this.showAlert(
+        this.showAlert(
           'Error',
           'Credenciales inválidas. Por favor, intente nuevamente.'
         );
       }
     } else {
-      await this.showAlert(
+      this.showAlert(
         'Error',
         'Por favor, complete todos los campos correctamente.'
       );

@@ -1,79 +1,58 @@
-<ion-header>
-  <ion-toolbar>
-    <img src="./../assets/icon/LogoDuoc.png" alt="DuocUC Logo" class="logo" />
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true" class="ion-padding">
-  <ion-content *ngIf="isMobile">
-    <ion-content class="full-screen-content">
-      <ion-content class="centered-content">
-        <h2 class="text-center mb-4 text-dark">Bienvenido alumno.user</h2>
-        <h3 class="text-center mb-4 text-dark">Clases del día</h3>
-        <ion-content class="mb-4">
-          <ion-accordion-group>
-            <ion-accordion value="first">
-              <ion-item slot="header" color="light">
-                <ion-label>PROGRAMACIÓN DE APLICACIONES MÓVILES</ion-label>
-              </ion-item>
-              <div class="ion-padding" slot="content">
-                <strong>PGY4121-006V</strong> <br />
-                <strong>PROFESOR:</strong>VICENTE JULIO ZAPATA VALENZUELA <br />
-                <strong>SALA:</strong>LC13 LABORATORIO DE COMPUTACIÓN <br />
-                <strong>SEDE:</strong>PUENTE ALTO.
-              </div>
-            </ion-accordion>
-            <ion-accordion value="second">
-              <ion-item slot="header" color="light">
-                <ion-label>CALIDAD DE SOFTWARE</ion-label>
-              </ion-item>
-              <div class="ion-padding" slot="content">
-                <strong>CS4111-005V</strong> <br />
-                <strong>PROFESOR:</strong>MAURICIO ALFONSO LEV LAGOS BUSTOS
-                <br />
-                <strong>SALA:</strong>LC7 LABORATORIO DE COMPUTACIÓN <br />
-                <strong>SEDE:</strong>PUENTE ALTO.
-              </div>
-            </ion-accordion>
-            <ion-accordion value="third">
-              <ion-item slot="header" color="light">
-                <ion-label>ARQUITECTURA</ion-label>
-              </ion-item>
-              <div class="ion-padding" slot="content">
-                <strong>ASY4131-005V</strong> <br />
-                <strong>PROFESOR:</strong>PAULO ANDRES BERRIOS DIAZ <br />
-                <strong>SALA:</strong>LC9 LABORATORIO DE COMPUTACIÓN <br />
-                <strong>SEDE:</strong>PUENTE ALTO.
-              </div>
-            </ion-accordion>
-          </ion-accordion-group>
-        </ion-content>
-      </ion-content>
+<ion-content *ngIf="isMobile">
+  <ion-menu contentId="main-content" type="overlay">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>
+          <img
+            src="../../assets/icon/LogoDuoc.png"
+            alt="Duocuc Logo"
+            class="logo"
+          />
+        </ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-menu-toggle>
+        <ion-item>
+          escanear
+          <ion-icon name="barcode-outline" slot="start"></ion-icon>
+        </ion-item>
+      </ion-menu-toggle>
     </ion-content>
-  </ion-content>
-
-  <ion-content
-    *ngIf="!isMobile"
-    class="desktop-message-container text-dark d-flex justify-content-center align-items-center"
-  >
-    <p class="message text-dark text-center">
-      <strong>Mensaje:</strong><br />
-      la asistencia por escritorio esta bloqueada, es
-      <strong>solo para profesores</strong>.<br />
-      Favor de escanear asistencia por <strong>celular</strong>.
-    </p>
-  </ion-content>
+  </ion-menu>
+  <div class="ion-page" id="main-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>
+          <img
+            src="../../assets/icon/LogoDuoc.png"
+            alt="Duocuc Logo"
+            class="logo"
+          />
+        </ion-title>
+        <ion-buttons slot="start">
+          <ion-menu-toggle>
+            <ion-button>
+              <ion-icon name="grid-outline" class="text-white"></ion-icon>
+            </ion-button>
+          </ion-menu-toggle>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <p class="text-dark">Contenido principal aquí...</p>
+    </ion-content>
+  </div>
 </ion-content>
 
-<ion-tabs>
-  <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="home">
-      <ion-icon name="home-outline"></ion-icon>
-      <ion-label>Inicio</ion-label>
-    </ion-tab-button>
-    <ion-tab-button tab="qr">
-      <ion-icon name="qr-code-outline"></ion-icon>
-      <ion-label>QR</ion-label>
-    </ion-tab-button>
-  </ion-tab-bar>
-</ion-tabs>
+<ion-content
+  *ngIf="!isMobile"
+  class="desktop-message-container text-dark d-flex justify-content-center align-items-center"
+>
+  <p class="message text-dark text-center">
+    <strong>Mensaje:</strong><br />
+    la asistencia por escritorio esta bloqueada, es
+    <strong>solo para profesores</strong>.<br />
+    Favor de escanear asistencia por <strong>celular</strong>.
+  </p>
+</ion-content>
