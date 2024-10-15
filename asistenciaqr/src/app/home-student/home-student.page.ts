@@ -8,6 +8,7 @@ import { Platform, IonicModule } from '@ionic/angular';
 })
 export class HomeStudentPage implements OnInit {
   isMobile: boolean = true;
+  isModalOpen: boolean = false;
 
   constructor(private platform: Platform) {}
 
@@ -21,5 +22,9 @@ export class HomeStudentPage implements OnInit {
 
   private isScreenSmall(): boolean {
     return window.innerWidth < 768;
+  }
+
+  setOpen(isOpen: boolean) {
+    this.isModalOpen = isOpen;
   }
 }
