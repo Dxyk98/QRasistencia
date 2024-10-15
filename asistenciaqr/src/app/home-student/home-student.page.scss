@@ -20,6 +20,10 @@
   border-color: #00243e;
 }
 
+ion-fab-button {
+  --background: #003057;
+}
+
 ion-header {
   ion-toolbar {
     --background: #003057;
@@ -30,12 +34,12 @@ ion-header {
   }
 }
 
-ion-content {
+ion-item {
   --background: #f5f5f5;
 }
 
-.full-screen-content {
-  background-color: #f5f5f5;
+ion-content {
+  --background: #f5f5f5;
 }
 
 ion-tabs {
@@ -51,5 +55,11 @@ ion-tabs {
         --color: #ffd200;
       }
     }
+  }
+}
+
+ion-accordion-group {
+  ion-accordion {
+    --background: #f5f5f5;
   }
 }

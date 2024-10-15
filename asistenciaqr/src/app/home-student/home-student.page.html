@@ -13,9 +13,27 @@
     </ion-header>
     <ion-content class="ion-padding">
       <ion-menu-toggle>
-        <ion-item>
+        <ion-item class="text-dark">
+          Credencial Virtual
+          <ion-icon name="id-card-outline" slot="start"></ion-icon>
+        </ion-item>
+      </ion-menu-toggle>
+      <ion-menu-toggle>
+        <ion-item class="text-dark">
           escanear
           <ion-icon name="barcode-outline" slot="start"></ion-icon>
+        </ion-item>
+      </ion-menu-toggle>
+      <ion-menu-toggle>
+        <ion-item class="text-dark">
+          Ajustes
+          <ion-icon name="cog-outline" slot="start"></ion-icon>
+        </ion-item>
+      </ion-menu-toggle>
+      <ion-menu-toggle routerLink="/login">
+        <ion-item class="text-dark">
+          Cerrar Sesión
+          <ion-icon name="lock-closed-sharp" slot="start"></ion-icon>
         </ion-item>
       </ion-menu-toggle>
     </ion-content>
@@ -40,30 +58,70 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <ion-accordion-group>
-        <ion-accordion value="first">
-          <ion-item slot="header" color="light">
-            <ion-label>First Accordion</ion-label>
-          </ion-item>
-          <div class="ion-padding" slot="content">First Content</div>
-        </ion-accordion>
-        <ion-accordion value="second">
-          <ion-item slot="header" color="light">
-            <ion-label>Second Accordion</ion-label>
-          </ion-item>
-          <div class="ion-padding" slot="content">Second Content</div>
-        </ion-accordion>
-        <ion-accordion value="third">
-          <ion-item slot="header" color="light">
-            <ion-label>Third Accordion</ion-label>
-          </ion-item>
-          <div class="ion-padding" slot="content">Third Content</div>
-        </ion-accordion>
-      </ion-accordion-group>
+      <div class="accordion" id="accordionPanelsStayOpenExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#panelsStayOpen-collapseOne"
+              aria-expanded="false"
+              aria-controls="panelsStayOpen-collapseOne"
+            >
+              Accordion Item #1
+            </button>
+          </h2>
+          <div
+            id="panelsStayOpen-collapseOne"
+            class="accordion-collapse collapse"
+          >
+            <div class="accordion-body">
+              <strong>This is the first item's accordion body.</strong> It is
+              shown by default, until the collapse plugin adds the appropriate
+              classes that we use to style each element. These classes control
+              the overall appearance, as well as the showing and hiding via CSS
+              transitions. You can modify any of this with custom CSS or
+              overriding our default variables. It's also worth noting that just
+              about any HTML can go within the <code>.accordion-body</code>,
+              though the transition does limit overflow.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#panelsStayOpen-collapseTwo"
+              aria-expanded="false"
+              aria-controls="panelsStayOpen-collapseTwo"
+            >
+              Accordion Item #2
+            </button>
+          </h2>
+          <div
+            id="panelsStayOpen-collapseTwo"
+            class="accordion-collapse collapse"
+          >
+            <div class="accordion-body">
+              <strong>This is the second item's accordion body.</strong> It is
+              hidden by default, until the collapse plugin adds the appropriate
+              classes that we use to style each element. These classes control
+              the overall appearance, as well as the showing and hiding via CSS
+              transitions. You can modify any of this with custom CSS or
+              overriding our default variables. It's also worth noting that just
+              about any HTML can go within the <code>.accordion-body</code>,
+              though the transition does limit overflow.
+            </div>
+          </div>
+        </div>
+      </div>
     </ion-content>
     <ion-fab slot="fixed" vertical="bottom" horizontal="center">
       <ion-fab-button>
-        <ion-icon name="home-outline"></ion-icon>
+        <ion-icon name="home-outline" class="text-white"></ion-icon>
       </ion-fab-button>
       <ion-fab-list side="start">
         <ion-fab-button>
