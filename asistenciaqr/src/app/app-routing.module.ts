@@ -30,7 +30,15 @@ const routes: Routes = [
       import('./home-student/home-student.module').then(
         (m) => m.HomeStudentPageModule
       ),
+  },  {
+    path: 'genera-qr',
+    loadChildren: () => import('./genera-qr/genera-qr.module').then( m => m.GeneraQrPageModule)
   },
+  {
+    path: 'scanqr',
+    loadChildren: () => import('./scanqr/scanqr.module').then( m => m.ScanqrPageModule)
+  },
+
 ];
 
 @NgModule({
