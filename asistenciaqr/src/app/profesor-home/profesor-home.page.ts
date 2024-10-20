@@ -8,6 +8,9 @@ import { Platform } from '@ionic/angular';
 })
 export class ProfesorHomePage implements OnInit {
   isMobile: boolean = false;
+  isQrOpen: boolean = false;
+  qrData: string = 'texto de prueba';
+  createdCode: string = 'Clase 1';
 
   constructor(private platform: Platform) {}
 
@@ -20,5 +23,9 @@ export class ProfesorHomePage implements OnInit {
 
   private isScreenSmall(): boolean {
     return window.innerWidth < 768;
+  }
+
+  setQrOpen(isOpen: boolean) {
+    this.isQrOpen = isOpen;
   }
 }
