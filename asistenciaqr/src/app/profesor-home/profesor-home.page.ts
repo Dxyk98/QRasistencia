@@ -14,6 +14,7 @@ export class ProfesorHomePage implements OnInit {
 
   constructor(private platform: Platform) {}
 
+  //determinamos las funciones de pantalla
   ngOnInit() {
     this.isMobile =
       this.platform.is('mobile') ||
@@ -21,10 +22,12 @@ export class ProfesorHomePage implements OnInit {
       this.isScreenSmall();
   }
 
+  //se determian la medida de la pantalla
   private isScreenSmall(): boolean {
     return window.innerWidth < 768;
   }
 
+  //función para abrir el modal de QR
   setQrOpen(isOpen: boolean) {
     this.isQrOpen = isOpen;
   }

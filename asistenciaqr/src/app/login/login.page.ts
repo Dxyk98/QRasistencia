@@ -12,10 +12,6 @@ import { UserService } from '../user.service';
 })
 export class LoginPage implements OnInit {
   loginForm!: FormGroup;
-  private readonly allowedCredentials = [
-    { email: 'test@duocuc.cl', password: 'test12345' },
-    { email: 'profesor@profesor.duoc.cl', password: 'test6789' },
-  ];
 
   constructor(
     private fb: FormBuilder,
@@ -28,6 +24,7 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {}
 
+  //patrones de validación
   private initForm(): void {
     this.loginForm = this.fb.group({
       email: [
@@ -43,6 +40,7 @@ export class LoginPage implements OnInit {
     });
   }
 
+  //onsubmit: al colocar los valores necesarios, validara que este todo bien y redireccionara donde se debe.
   onLogin() {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
@@ -66,6 +64,7 @@ export class LoginPage implements OnInit {
     }
   }
 
+  //showalert: función para mostrar la alerta emergente
   private async showAlert(header: string, message: string): Promise<void> {
     const alert = await this.alertController.create({
       header,

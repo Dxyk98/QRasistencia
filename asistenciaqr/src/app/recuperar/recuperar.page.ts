@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-recuperar',
@@ -11,20 +12,18 @@ import { AlertController } from '@ionic/angular';
 })
 export class RecuperarPage implements OnInit {
   recuperarForm!: FormGroup;
-  private readonly allowedEmails = [
-    { email: 'test@duocuc.cl' },
-    { email: 'profesor@profesor.duoc.cl' },
-  ];
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private returnUser: UserService
   ) {
     this.initForm();
   }
 
   ngOnInit() {}
 
+  //patrones de validación
   private initForm(): void {
     this.recuperarForm = this.fb.group({
       email: [
@@ -34,48 +33,37 @@ export class RecuperarPage implements OnInit {
           Validators.pattern(
             '^[a-zA-Z0-9._%+-]+@(duocuc.cl|profesor.duoc.cl)$'
           ),
-          this.allowedEmailsValidator.bind(this),
         ],
       ],
+      password: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
 
-  private allowedEmailsValidator(control: {
-    value: string;
-  }): { [key: string]: boolean } | null {
-    return this.allowedEmails.some((email) => email.email === control.value)
-      ? null
-      : { notAllowed: true };
-  }
-
-  async onSubmit(): Promise<void> {
+  //onsubmit: al colocar los valores necesarios, validara que este todo bien y redireccionara donde se debe.
+  onSubmit() {
     if (this.recuperarForm.valid) {
-      const { email } = this.recuperarForm.value;
-      const isValidEmail = this.allowedEmails.some(
-        (allowedEmail) => allowedEmail.email === email
-      );
-
-      if (isValidEmail) {
-        console.log('Email válido');
+      const { email, password } = this.recuperarForm.value;
+      if (this.returnUser.validarServicio(email, password)) {
         if (email.endsWith('@duocuc.cl')) {
           this.router.navigate(['/home-student']);
         } else if (email.endsWith('@profesor.duoc.cl')) {
           this.router.navigate(['/profesor-home']);
         }
       } else {
-        await this.showAlert(
+        this.showAlert(
           'Error',
           'Credenciales inválidas. Por favor, intente nuevamente.'
         );
       }
     } else {
-      await this.showAlert(
+      this.showAlert(
         'Error',
         'Por favor, complete todos los campos correctamente.'
       );
     }
   }
 
+  //showalert: función para mostrar la alerta emergente
   private async showAlert(header: string, message: string): Promise<void> {
     const alert = await this.alertController.create({
       header,

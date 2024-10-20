@@ -18,6 +18,7 @@ export class HomeStudentPage implements OnInit {
 
   constructor(private platform: Platform) {}
 
+  //se determinan las pantallas
   ngOnInit() {
     this.isMobile =
       this.platform.is('mobile') ||
@@ -26,10 +27,12 @@ export class HomeStudentPage implements OnInit {
     console.log('isMobile:', this.isMobile);
   }
 
+  //pantalla permitida como celuar, si es mayor se motrara un mensaje
   private isScreenSmall(): boolean {
     return window.innerWidth < 768;
   }
 
+  //funciones para llenar modales.
   setScannerOpen(isOpen: boolean) {
     this.isModalScanner = isOpen;
   }
@@ -42,6 +45,7 @@ export class HomeStudentPage implements OnInit {
     this.isModalSettings = isOpen;
   }
 
+  //funcion que pide autorizar la camara del dispositivo para poder escanear el codigo
   requestPermisssion() {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices
@@ -58,6 +62,7 @@ export class HomeStudentPage implements OnInit {
     }
   }
 
+  //funcion que escanea el QR
   startScanner() {
     const config = {
       fps: 10,
@@ -76,6 +81,7 @@ export class HomeStudentPage implements OnInit {
     );
   }
 
+  //se escanea QR y debería de dar el OK
   ngOnDestroy() {
     if (this.html5QrCode) {
       this.html5QrCode.clear();
