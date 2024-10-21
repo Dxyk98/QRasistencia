@@ -46,7 +46,7 @@ export class LoginPage implements OnInit {
       const { email, password } = this.loginForm.value;
       if (this.returnUser.validarServicio(email, password)) {
         if (email.endsWith('@duocuc.cl')) {
-          this.router.navigate(['/home-student']);
+          this.router.navigate(['/student/home-student']);
         } else if (email.endsWith('@profesor.duoc.cl')) {
           this.router.navigate(['/profesor-home']);
         }

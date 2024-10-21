@@ -30,7 +30,11 @@ const routes: Routes = [
       import('./home-student/home-student.module').then(
         (m) => m.HomeStudentPageModule
       ),
+  },  {
+    path: 'student',
+    loadChildren: () => import('./student/student.module').then( m => m.StudentPageModule)
   },
+
 ];
 
 @NgModule({
