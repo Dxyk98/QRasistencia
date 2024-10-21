@@ -15,6 +15,13 @@ const routes: Routes = [
             (m) => m.HomeStudentPageModule
           ),
       },
+      {
+        path: 'calendario',
+        loadChildren: () =>
+          import('./../calendario/calendario.module').then(
+            (m) => m.CalendarioPageModule
+          ),
+      },
     ],
   },
 ];

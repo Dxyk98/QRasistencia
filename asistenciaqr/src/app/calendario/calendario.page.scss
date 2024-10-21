@@ -1,0 +1,70 @@
+.logo {
+  max-width: 150px;
+  margin: 0 auto;
+  display: block;
+}
+
+.card {
+  background-color: #f8f9fa;
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+  background-color: #003057;
+  border-color: #003057;
+}
+
+.btn-primary:hover {
+  background-color: #00243e;
+  border-color: #00243e;
+}
+
+ion-fab-button {
+  --background: #003057;
+}
+
+ion-header {
+  ion-toolbar {
+    --background: #003057;
+    --color: #ffffff;
+    .logo {
+      filter: brightness(0) invert(1);
+    }
+  }
+}
+
+ion-button {
+  --background: #003057;
+  --color: #ffffff;
+}
+
+ion-item {
+  --background: #f5f5f5;
+}
+
+ion-content {
+  --background: #f5f5f5;
+}
+
+ion-tabs {
+  ion-tab-bar {
+    --background: #003057;
+    --color: #ffffff;
+
+    ion-tab-button {
+      --color: #ffffff;
+      --color-selected: #ffd200;
+
+      &:hover {
+        --color: #ffd200;
+      }
+    }
+  }
+}
+
+ion-accordion-group {
+  ion-accordion {
+    --background: #f5f5f5;
+  }
+}

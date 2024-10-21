@@ -1,0 +1,140 @@
+<ion-content *ngIf="isMobile">
+  <ion-menu contentId="main-content" type="overlay">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>
+          <img
+            src="../../assets/icon/LogoDuoc.png"
+            alt="Duocuc Logo"
+            class="logo"
+          />
+        </ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <!-- Modal Credencial -->
+      <ion-modal [isOpen]="isModalCredential">
+        <ng-template>
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Credencial Virtual</ion-title>
+              <ion-buttons slot="start">
+                <ion-button (click)="setCredentialOpen(false)">
+                  <ion-icon
+                    name="chevron-back-outline"
+                    class="text-white"
+                  ></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <ion-card>
+              <ion-card-header>
+                <div>
+                  <ion-icon
+                    name="person-outline"
+                    style="width: 50px; height: 50px"
+                  ></ion-icon>
+                </div>
+                <ion-card-title> Test Student </ion-card-title>
+                <ion-card-subtitle> 11.111.111-9 </ion-card-subtitle>
+              </ion-card-header>
+            </ion-card>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+      <!-- Fin Modal Credencial -->
+      <!-- Modal Scaner -->
+      <ion-modal [isOpen]="isModalScanner">
+        <ng-template>
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Modal</ion-title>
+              <ion-buttons slot="start">
+                <ion-button (click)="setScannerOpen(false)">
+                  <ion-icon
+                    name="chevron-back-outline"
+                    class="text-white"
+                  ></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <div id="reader">
+              <ion-button (click)="requestPermisssion()">
+                <ion-icon name="aperture-outline" slot="start"></ion-icon>
+                Dar permiso a camará
+              </ion-button>
+            </div>
+            <div *ngIf="scannerResult"></div>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+      <!-- Fin Modal Scanner -->
+      <ion-modal [isOpen]="isModalSettings">
+        <ng-template>
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Ajustes</ion-title>
+              <ion-buttons slot="start">
+                <ion-button (click)="setSettingsOpen(false)">
+                  <ion-icon
+                    name="chevron-back-outline"
+                    class="text-white"
+                  ></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding"></ion-content>
+        </ng-template>
+      </ion-modal>
+      <ion-menu-toggle>
+        <ion-item class="text-dark" (click)="setCredentialOpen(true)">
+          Credencial Virtual
+          <ion-icon name="id-card-outline" slot="start"></ion-icon>
+        </ion-item>
+      </ion-menu-toggle>
+      <ion-menu-toggle>
+        <ion-item class="text-dark" (click)="setScannerOpen(true)">
+          escanear
+          <ion-icon name="barcode-outline" slot="start"></ion-icon>
+        </ion-item>
+      </ion-menu-toggle>
+      <ion-menu-toggle>
+        <ion-item class="text-dark" (click)="setSettingsOpen(true)">
+          Ajustes
+          <ion-icon name="cog-outline" slot="start"></ion-icon>
+        </ion-item>
+      </ion-menu-toggle>
+      <ion-menu-toggle routerLink="/login">
+        <ion-item class="text-dark">
+          Cerrar Sesión
+          <ion-icon name="lock-closed-sharp" slot="start"></ion-icon>
+        </ion-item>
+      </ion-menu-toggle>
+    </ion-content>
+  </ion-menu>
+  <div class="ion-page" id="main-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>
+          <img
+            src="../../assets/icon/LogoDuoc.png"
+            alt="Duocuc Logo"
+            class="logo"
+          />
+        </ion-title>
+        <ion-buttons slot="start">
+          <ion-menu-toggle>
+            <ion-button>
+              <ion-icon name="grid-outline" class="text-white"></ion-icon>
+            </ion-button>
+          </ion-menu-toggle>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+  </div>
+</ion-content>
