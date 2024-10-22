@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 
 @Component({
-  selector: 'app-calendario',
-  templateUrl: './calendario.page.html',
-  styleUrls: ['./calendario.page.scss'],
+  selector: 'app-horario',
+  templateUrl: './horario.page.html',
+  styleUrls: ['./horario.page.scss'],
 })
-export class CalendarioPage implements OnInit {
+export class HorarioPage implements OnInit {
   isMobile: boolean = true;
-
   constructor(private platform: Platform) {}
 
   ngOnInit() {

@@ -1,0 +1,27 @@
+<ion-content *ngIf="isMobile">
+  <div class="ion-page" id="main-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>
+          <img
+            src="../../assets/icon/LogoDuoc.png"
+            alt="Duocuc Logo"
+            class="logo"
+          />
+        </ion-title>
+      </ion-toolbar>
+    </ion-header>
+  </div>
+</ion-content>
+
+<ion-content
+  *ngIf="!isMobile"
+  class="desktop-message-container text-dark d-flex justify-content-center align-items-center"
+>
+  <p class="message text-dark text-center">
+    <strong>Mensaje:</strong><br />
+    la asistencia por escritorio esta bloqueada, es
+    <strong>solo para profesores</strong>.<br />
+    Favor de escanear asistencia por <strong>celular</strong>.
+  </p>
+</ion-content>

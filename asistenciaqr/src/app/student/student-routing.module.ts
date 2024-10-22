@@ -22,6 +22,13 @@ const routes: Routes = [
             (m) => m.CalendarioPageModule
           ),
       },
+      {
+        path: 'horario',
+        loadChildren: () =>
+          import('./../horario/horario.module').then(
+            (m) => m.HorarioPageModule
+          ),
+      },
     ],
   },
 ];
