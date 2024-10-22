@@ -32,7 +32,7 @@ export class HomeStudentPage implements OnInit {
     return window.innerWidth < 768;
   }
 
-  //funciones para llenar modales.
+  //funciones para abrir modales.
   setScannerOpen(isOpen: boolean) {
     this.isModalScanner = isOpen;
   }
@@ -46,12 +46,12 @@ export class HomeStudentPage implements OnInit {
   }
 
   //funcion que pide autorizar la camara del dispositivo para poder escanear el codigo
-  requestPermisssion() {
+  requestPermission() {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices
         .getUserMedia({ video: true })
-        .then((strem) => {
-          this.isCameraPermission = true;
+        .then((stream) => {
+          this.isCameraPermission = true; //Si se otrogan permisos, establece isCameraPermission en true
           this.startScanner();
         })
         .catch((error) => {
@@ -69,22 +69,21 @@ export class HomeStudentPage implements OnInit {
       qrbox: 250,
       supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
     };
-    this.html5QrCode = new Html5QrcodeScanner('reader', config, false);
+    this.html5QrCode = new Html5QrcodeScanner('reader', config, true); //Se inicializa el escaner con el ID reader y la configuración determinada. El tercer parámetro 'true' es para habilitar la desactivacion de forma automatica
     this.html5QrCode.render(
       (result) => {
         this.scannerResult = result;
-        console.log('resultado del scanner', result);
+        console.log('resultado del scanner', result); //callback de exito, al escanear el código QR exitosamente
       },
       (error) => {
-        console.warn('error al escanear codigo QR', error);
+        console.warn('error al escanear codigo QR', error); //callback, si ocurre un error, se imprime una advertencia en la consola.
       }
     );
   }
 
-  //se escanea QR y debería de dar el OK
   ngOnDestroy() {
     if (this.html5QrCode) {
-      this.html5QrCode.clear();
+      this.html5QrCode.clear(); //debería limpiar cualquier recurso usado por el escaner.
     }
   }
 }

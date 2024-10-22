@@ -41,10 +41,11 @@ ion-input {
   --padding-start: 10px;
 }
 
-.login-button {
+ion-button {
   --background: #ffa300;
   --color: white;
   margin-top: 20px;
+  cursor: pointer;
 }
 
 .forgot-password {
@@ -56,4 +57,38 @@ ion-input {
 
 .custom-placeholder {
   color: #000000;
+}
+
+.logo {
+  width: 250px;
+  height: auto;
+  margin-bottom: 20px;
+  -webkit-animation-name: fade-in-down;
+  animation-name: fade-in-down;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+}
+
+@-webkit-keyframes fade-in-down {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fade-in-down {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }
