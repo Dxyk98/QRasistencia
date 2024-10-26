@@ -1,13 +1,30 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>administrador</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <ion-content>
+    <form (ngSubmit)="agregar()">
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input [(ngModel)]="nombre" name="nombre"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Edad</ion-label>
+        <ion-input [(ngModel)]="edad" name="edad"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Carrera</ion-label>
+        <ion-input [(ngModel)]="carrera" name="carrera"></ion-input>
+      </ion-item>
+      <ion-button expand="block" type="submit" class="login-button"
+        >Agregar</ion-button
+      >
+    </form>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">administrador</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <ion-list>
+      <ion-item *ngFor="let persona of personas">
+        {{ persona.nombre }} - {{ persona.edad }} - {{ persona.carrera }}
+        <ion-button (click)="eliminar(persona.identificador)" slot="end"
+          >Eliminar</ion-button
+        >
+      </ion-item>
+    </ion-list>
+  </ion-content>
 </ion-content>

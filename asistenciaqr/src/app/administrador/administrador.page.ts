@@ -16,7 +16,15 @@ interface Persona {
   styleUrls: ['./administrador.page.scss'],
 })
 export class AdministradorPage implements OnInit {
-  constructor() {}
+  constructor(private storageservice: StorageService) {}
+  personas: Persona[] = [];
 
-  ngOnInit() {}
+  async ngOnInit() {
+    await this.storageservice.init();
+    await this.listar();
+  }
+
+  async listar() {
+    this.personas = (await this.storageservice.obtenerDatos('personas')) || [];
+  }
 }
