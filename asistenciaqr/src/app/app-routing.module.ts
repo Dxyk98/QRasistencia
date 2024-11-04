@@ -30,19 +30,24 @@ const routes: Routes = [
       import('./home-student/home-student.module').then(
         (m) => m.HomeStudentPageModule
       ),
-  },  {
+  },
+  {
     path: 'student',
-    loadChildren: () => import('./student/student.module').then( m => m.StudentPageModule)
+    loadChildren: () =>
+      import('./student/student.module').then((m) => m.StudentPageModule),
   },
   {
     path: 'calendario',
-    loadChildren: () => import('./calendario/calendario.module').then( m => m.CalendarioPageModule)
+    loadChildren: () =>
+      import('./calendario/calendario.module').then(
+        (m) => m.CalendarioPageModule
+      ),
   },
   {
     path: 'horario',
-    loadChildren: () => import('./horario/horario.module').then( m => m.HorarioPageModule)
-  },
-  {
+    loadChildren: () =>
+      import('./horario/horario.module').then((m) => m.HorarioPageModule),
+  },  {
     path: 'administrador',
     loadChildren: () => import('./administrador/administrador.module').then( m => m.AdministradorPageModule)
   },
