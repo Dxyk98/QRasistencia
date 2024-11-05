@@ -8,11 +8,11 @@ import { Html5QrcodeScanner, Html5QrcodeScanType } from 'html5-qrcode';
   styleUrls: ['./home-student.page.scss'],
 })
 export class HomeStudentPage implements OnInit {
-  isMobile: boolean = true;
-  isModalCredential: boolean = false;
-  isModalSettings: boolean = false;
-  isModalScanner: boolean = false;
-  scannerResult: string | null = null;
+  isMobile: boolean = true; //boolean para validar si es celular o es desk
+  isModalCredential: boolean = false; //Boolean para abrir y cerrar modal de credencial
+  isModalSettings: boolean = false; //modal de configuraciones o ajustes
+  isModalScanner: boolean = false; //modal de scanner de clases
+  scannerResult: string | null = null; //string de escaner de QR
   private html5QrCode: Html5QrcodeScanner | null = null;
   isCameraPermission: boolean = false;
 

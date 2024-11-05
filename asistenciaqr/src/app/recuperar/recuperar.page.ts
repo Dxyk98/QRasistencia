@@ -40,19 +40,45 @@ export class RecuperarPage implements OnInit {
   }
 
   //onsubmit: al colocar los valores necesarios, validara que este todo bien y redireccionara donde se debe.
-  onSubmit() {
+  //onSubmit() {
+  //  if (this.recuperarForm.valid) {
+  //    const { email, password } = this.recuperarForm.value;
+  //    if (this.returnUser.validarServicio(email, password)) {
+  //      if (email.endsWith('@duocuc.cl')) {
+  //        this.router.navigate(['/home-student']);
+  //      } else if (email.endsWith('@profesor.duoc.cl')) {
+  //        this.router.navigate(['/profesor-home']);
+  //      }
+  //    } else {
+  //      this.showAlert(
+  //        'Error',
+  //        'Credenciales inválidas. Por favor, intente nuevamente.'
+  //      );
+  //    }
+  //  } else {
+  //    this.showAlert(
+  //      'Error',
+  //      'Por favor, complete todos los campos correctamente.'
+  //    );
+  //  }
+  //}
+
+  async onSubmit() {
     if (this.recuperarForm.valid) {
       const { email, password } = this.recuperarForm.value;
-      if (this.returnUser.validarServicio(email, password)) {
+      //llamamos a la función del servicio
+      const autenticado = await this.returnUser.autenticar(email, password);
+      if (autenticado) {
+        //se redirige según el termino del correo
         if (email.endsWith('@duocuc.cl')) {
-          this.router.navigate(['/home-student']);
+          this.router.navigate(['/student/home-student']);
         } else if (email.endsWith('@profesor.duoc.cl')) {
           this.router.navigate(['/profesor-home']);
         }
       } else {
         this.showAlert(
           'Error',
-          'Credenciales inválidas. Por favor, intente nuevamente.'
+          'Credenciales invalidas. Por favor, intente nuevamente.'
         );
       }
     } else {
