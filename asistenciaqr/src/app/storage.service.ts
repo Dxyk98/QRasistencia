@@ -10,13 +10,14 @@ export class StorageService {
   private storage: Storage | null = null;
 
   constructor(private storageInstance: Storage) {
-    this.init(); // Inicializa el almacenamiento
+    this.init();
   }
 
   async init() {
     this.storage = await this.storageInstance.create();
   }
 
+  //función para obtener datos de la persona seleccionada.
   async obtenerDato(key: string, identificador: string) {
     this.datos = (await this.storage?.get(key)) || [];
     this.dato = this.datos.find(
@@ -25,8 +26,9 @@ export class StorageService {
     return this.dato;
   }
 
+  //se guardan los datos de la persona y se crea json para poder guardarlo en el storage
   async agregar(key: string, jsonAgregar: any) {
-    this.datos = (await this.storage?.get(key)) || []; // Corrige a `this.datos`
+    this.datos = (await this.storage?.get(key)) || [];
     const exist = await this.obtenerDato(key, jsonAgregar.identificador);
 
     if (!exist) {
@@ -43,7 +45,7 @@ export class StorageService {
       throw new Error('Storage no está inicializado');
     }
     this.datos = (await this.storage.get(key)) || [];
-    return this.datos; // Retorna `this.datos` en lugar de `this.dato`
+    return this.datos;
   }
 
   async eliminar(key: string, identificador: string) {

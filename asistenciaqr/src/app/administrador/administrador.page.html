@@ -1,59 +1,94 @@
 <ion-content class="ion-padding">
   <form [formGroup]="personaForm" (ngSubmit)="guardarPersona()">
-    <ion-item>
-      <ion-label position="floating">Nombre</ion-label>
-      <ion-input type="text" formControlName="nombre" required></ion-input>
+    <ion-item class="p-2">
+      <ion-input
+        label="Nombre"
+        label-placement="floating"
+        fill="outline"
+        placeholder=" Ingrese Nombre"
+        formControlName="nombre"
+        required
+      ></ion-input>
     </ion-item>
     <ion-item
       *ngIf="personaForm.get('nombre')?.invalid && (personaForm.get('nombre')?.dirty || personaForm.get('nombre')?.touched)"
+      class="py-2"
     >
       <ion-text color="danger"
         >El nombre es requerido y debe tener al menos 2 caracteres.</ion-text
       >
     </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Apellido</ion-label>
-      <ion-input type="text" formControlName="apellido" required></ion-input>
+    <ion-item class="p-2">
+      <ion-input
+        label="Apellido"
+        label-placement="floating"
+        fill="outline"
+        placeholder=" Ingrese apellido"
+        formControlName="apellido"
+        required
+      ></ion-input>
     </ion-item>
     <ion-item
       *ngIf="personaForm.get('apellido')?.invalid && (personaForm.get('apellido')?.dirty || personaForm.get('apellido')?.touched)"
+      class="py-2"
     >
       <ion-text color="danger"
         >El apellido es requerido y debe tener al menos 2 caracteres.</ion-text
       >
     </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Carrera</ion-label>
-      <ion-input type="text" formControlName="carrera" required></ion-input>
+    <ion-item class="p-2">
+      <ion-select
+        label="Carrera"
+        label-placement="floating"
+        fill="outline"
+        formControlName="carrera"
+        required
+      >
+        <ion-select-option *ngFor="let carrera of carreras" [value]="carrera">
+          {{ carrera }}
+        </ion-select-option>
+      </ion-select>
     </ion-item>
     <ion-item
       *ngIf="personaForm.get('carrera')?.invalid && (personaForm.get('carrera')?.dirty || personaForm.get('carrera')?.touched)"
+      class="py-2"
     >
       <ion-text color="danger">La carrera es requerida.</ion-text>
     </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Email</ion-label>
-      <ion-input type="email" formControlName="email" required></ion-input>
+    <ion-item class="p-2">
+      <ion-input
+        label="Email"
+        label-placement="floating"
+        fill="outline"
+        placeholder=" Ingrese email"
+        formControlName="email"
+        required
+      ></ion-input>
     </ion-item>
     <ion-item
       *ngIf="personaForm.get('email')?.invalid && (personaForm.get('email')?.dirty || personaForm.get('email')?.touched)"
+      class="py-2"
     >
       <ion-text color="danger">Por favor, ingrese un email válido.</ion-text>
     </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Contraseña</ion-label>
+    <ion-item class="p-2">
       <ion-input
+        label="Contraseña"
+        label-placement="floating"
         type="password"
+        fill="outline"
+        placeholder=" Ingrese contraseña"
         formControlName="contrasena"
         required
       ></ion-input>
     </ion-item>
     <ion-item
       *ngIf="personaForm.get('contrasena')?.invalid && (personaForm.get('contrasena')?.dirty || personaForm.get('contrasena')?.touched)"
+      class="py-2"
     >
       <ion-text color="danger"
         >La contraseña debe tener al menos 8 caracteres.</ion-text

@@ -20,6 +20,14 @@ interface Persona {
 export class AdministradorPage implements OnInit {
   personaForm: FormGroup;
   personas: Persona[] = [];
+  carreras: string[] = [
+    'Ingeniería Informatica',
+    'Tecnico Informatico',
+    'Medicina',
+    'Derecho',
+    'Arquitectura',
+    'Administración',
+  ];
 
   constructor(
     private formBuilder: FormBuilder,
