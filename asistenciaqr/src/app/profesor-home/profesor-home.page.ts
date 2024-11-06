@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-profesor-home',
@@ -12,22 +11,17 @@ export class ProfesorHomePage implements OnInit {
   qrData: string = 'texto de prueba';
   createdCode: string = 'Clase 1';
 
-  constructor(private platform: Platform) {}
+  constructor() {}
 
-  //determinamos las funciones de pantalla
   ngOnInit() {
-    this.isMobile =
-      this.platform.is('mobile') ||
-      this.platform.is('tablet') ||
-      this.isScreenSmall();
+    this.checkIfMobile();
+    window.addEventListener('resize', () => this.checkIfMobile());
   }
 
-  //se determian la medida de la pantalla
-  private isScreenSmall(): boolean {
-    return window.innerWidth < 768;
+  private checkIfMobile() {
+    this.isMobile = window.innerWidth < 768;
   }
 
-  //función para abrir el modal de QR
   setQrOpen(isOpen: boolean) {
     this.isQrOpen = isOpen;
   }

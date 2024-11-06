@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Platform, IonicModule } from '@ionic/angular';
 import { Html5QrcodeScanner, Html5QrcodeScanType } from 'html5-qrcode';
 
 @Component({
@@ -8,7 +7,7 @@ import { Html5QrcodeScanner, Html5QrcodeScanType } from 'html5-qrcode';
   styleUrls: ['./home-student.page.scss'],
 })
 export class HomeStudentPage implements OnInit {
-  isMobile: boolean = true; //boolean para validar si es celular o es desk
+  isMobile: boolean = true;
   isModalCredential: boolean = false; //Boolean para abrir y cerrar modal de credencial
   isModalSettings: boolean = false; //modal de configuraciones o ajustes
   isModalScanner: boolean = false; //modal de scanner de clases
@@ -16,20 +15,16 @@ export class HomeStudentPage implements OnInit {
   private html5QrCode: Html5QrcodeScanner | null = null;
   isCameraPermission: boolean = false;
 
-  constructor(private platform: Platform) {}
+  constructor() {}
 
   //se determinan las pantallas
   ngOnInit() {
-    this.isMobile =
-      this.platform.is('mobile') ||
-      this.platform.is('tablet') ||
-      this.isScreenSmall();
-    console.log('isMobile:', this.isMobile);
+    this.checkIfMobile();
+    window.addEventListener('resize', () => this.checkIfMobile());
   }
 
-  //pantalla permitida como celuar, si es mayor se motrara un mensaje
-  private isScreenSmall(): boolean {
-    return window.innerWidth < 768;
+  private checkIfMobile() {
+    this.isMobile = window.innerWidth < 768;
   }
 
   //funciones para abrir modales.
@@ -55,10 +50,10 @@ export class HomeStudentPage implements OnInit {
           this.startScanner();
         })
         .catch((error) => {
-          alert('Error al solicitar permisos de camará');
+          alert('Error al solicitar permisos de cámara');
         });
     } else {
-      alert('Navegador no soporta el acceso a camará');
+      alert('Navegador no soporta el acceso a cámara');
     }
   }
 
