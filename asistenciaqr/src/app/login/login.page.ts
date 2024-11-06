@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../user.service';
 
 @Component({
@@ -12,6 +11,9 @@ import { UserService } from '../user.service';
 })
 export class LoginPage implements OnInit {
   loginForm!: FormGroup;
+  //Si ve este mensaje profesor, es para informarle que el registro a la aplicación se hace a traves de /administrador
+  //Se crea un usuario @profesor.duoc.cl y así poder ingresar, también así en la parte del alumno, que es @duocuc.cl
+  //Saludos!!
 
   constructor(
     private fb: FormBuilder,
@@ -71,20 +73,24 @@ export class LoginPage implements OnInit {
       //llamamos a la función del servicio
       const autenticado = await this.returnUser.autenticar(email, password);
       if (autenticado) {
-        //se redirige según el termino del correo
+        //se redirige según el termino del correo tanto estudiante, profesor y administrador
         if (email.endsWith('@duocuc.cl')) {
           this.router.navigate(['/student/home-student']);
         } else if (email.endsWith('@profesor.duoc.cl')) {
           this.router.navigate(['/profesor-home']);
+        } else if (email.endsWith('@administrador.cl')) {
+          this.router.navigate(['/administrador']); //autenticación de administrador no es funcional
         }
       } else {
         this.showAlert(
+          //muestra alerta de error
           'Error',
           'Credenciales invalidas. Por favor, intente nuevamente.'
         );
       }
     } else {
       this.showAlert(
+        //muestra alerta de error
         'Error',
         'Por favor, complete todos los campos correctamente.'
       );

@@ -63,6 +63,7 @@ export class RecuperarPage implements OnInit {
   //  }
   //}
 
+  //se crea nueva función para autenticar desde el storage
   async onSubmit() {
     if (this.recuperarForm.valid) {
       const { email, password } = this.recuperarForm.value;
@@ -77,12 +78,14 @@ export class RecuperarPage implements OnInit {
         }
       } else {
         this.showAlert(
+          //muestra alerta de error
           'Error',
           'Credenciales invalidas. Por favor, intente nuevamente.'
         );
       }
     } else {
       this.showAlert(
+        //muestra alerta de error
         'Error',
         'Por favor, complete todos los campos correctamente.'
       );
