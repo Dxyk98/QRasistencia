@@ -16,6 +16,7 @@ interface Clase {
   horaInicio: string;
   horaTermino: string;
   diurnoVespertino: string;
+  dias: string;
 }
 
 @Injectable({

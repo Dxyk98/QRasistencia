@@ -18,6 +18,8 @@ interface Clase {
   nombre: string;
   horaInicio: string;
   horaTermino: string;
+  diurnoVespertino: string;
+  dias: string;
 }
 
 @Component({
@@ -40,6 +42,8 @@ export class AdministradorPage implements OnInit {
     'Arquitectura',
     'Administración',
   ];
+  horario: string[] = ['Diurno', 'Vespertino'];
+  diaSemana: string[] = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -57,7 +61,8 @@ export class AdministradorPage implements OnInit {
       nombre: ['', [Validators.required, Validators.minLength(2)]],
       horaInicio: ['', Validators.required],
       horaTermino: ['', Validators.required],
-      profesor: ['', Validators.required],
+      diurnoVespertino: ['', Validators.required],
+      dias: ['', Validators.required],
     });
   }
 
@@ -154,6 +159,7 @@ export class AdministradorPage implements OnInit {
     }
   }
 
+  //funcion para guardar clase
   async guardarClase() {
     if (this.claseForm.valid) {
       const clase = this.claseForm.value;
@@ -171,6 +177,7 @@ export class AdministradorPage implements OnInit {
     }
   }
 
+  //funcion para eliminar clase
   async eliminarClase(id: string) {
     try {
       await this.storageService.eliminarClase(id);
@@ -180,12 +187,5 @@ export class AdministradorPage implements OnInit {
       this.mostrarMensaje('Error al eliminar la clase');
       console.error(error);
     }
-  }
-
-  onPersonaSelect(event: CustomEvent) {
-    this.personaSeleccionada = event.detail.value;
-    this.claseForm.patchValue({
-      persona: this.personaSeleccionada?.identificador,
-    });
   }
 }

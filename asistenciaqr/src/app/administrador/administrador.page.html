@@ -150,46 +150,80 @@
     <h2>Formulario Clases</h2>
     <div class="col-sm-6">
       <form [formGroup]="claseForm" (ngSubmit)="guardarClase()">
-        <ion-item>
-          <ion-label position="floating">Nombre de la clase</ion-label>
-          <ion-input formControlName="nombre" type="text"></ion-input>
+        <ion-item class="pt-2">
+          <ion-input
+            label="Nombre de la clase"
+            label-placement="floating"
+            fill="outline"
+            formControlName="nombre"
+            type="text"
+          ></ion-input>
         </ion-item>
-        <ion-item>
-          <ion-label position="floating">Hora de inicio</ion-label>
-          <ion-input formControlName="horaInicio" type="time"></ion-input>
+        <ion-item class="pt-2">
+          <ion-input
+            label="Hora Inicio"
+            label-placement="floating"
+            fill="outline"
+            formControlName="horaInicio"
+            type="time"
+          ></ion-input>
         </ion-item>
-        <ion-item>
-          <ion-label position="floating">Hora de término</ion-label>
-          <ion-input formControlName="horaTermino" type="time"></ion-input>
+        <ion-item class="pt-2">
+          <ion-input
+            label="Hora Termino"
+            label-placement="floating"
+            fill="outline"
+            formControlName="horaTermino"
+            type="time"
+          ></ion-input>
         </ion-item>
-        <ion-item>
-          <ion-label position="floating">Profesor</ion-label>
+        <ion-item class="pt-2">
           <ion-select
-            formControlName="profesor"
-            (ionChange)="onPersonaSelect($event)"
+            label="Diurno o Vespertino"
+            placeholder="Seleccione horario"
+            fill="outline"
+            formControlName="diurnoVespertino"
           >
-            <ion-select-option
-              *ngFor="let persona of personas"
-              [value]="persona.identificador"
-            >
-              {{ persona.nombre }} {{ persona.apellido }}
+            <ion-select-option *ngFor="let hora of horario" [value]="hora">
+              {{ hora }}
             </ion-select-option>
           </ion-select>
         </ion-item>
-        <ion-button expand="block" type="submit" [disabled]="!claseForm.valid"
+        <ion-item class="pt-2">
+          <ion-select
+            label="Dia(s) Clase"
+            placeholder="Seleccione Día(s)"
+            fill="outline"
+            formControlName="dias"
+            [multiple]="true"
+          >
+            <ion-select-option *ngFor="let dia of diaSemana" [value]="dia">
+              {{ dia }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-button
+          expand="block"
+          type="submit"
+          [disabled]="!claseForm.valid"
+          class="pt-2"
           >Guardar Clase</ion-button
         >
       </form>
     </div>
     <div class="col-sm-6">
       <ion-list>
+        <ion-list-header>
+          <ion-label>Lista de Clases</ion-label>
+        </ion-list-header>
         <ion-item *ngFor="let clase of clases">
           <ion-label>
             <h2>{{ clase.nombre }}</h2>
             <p>ID: {{ clase.id }}</p>
             <p>Hora de inicio: {{ clase.horaInicio }}</p>
             <p>Hora de término: {{ clase.horaTermino }}</p>
-            <p>profesor:</p>
+            <p>Diurno / Vespertino: {{ clase.diurnoVespertino }}</p>
+            <p>Dia(s): {{ clase.dias }}</p>
           </ion-label>
           <ion-button
             color="danger"

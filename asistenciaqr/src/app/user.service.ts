@@ -37,4 +37,10 @@ export class UserService {
         persona.email === email && persona.contrasena === contraseña
     );
   }
+
+  //solo por email
+  async emailAu(email: string): Promise<boolean> {
+    const personas = await this.storage.obtenerDatos('personas');
+    return personas.some((persona: any) => persona.email === email);
+  }
 }
