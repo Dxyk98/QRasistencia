@@ -123,7 +123,7 @@ export class StorageService {
     }
   }
 
-  //metodo para agregar clase
+  //metodo para agregar asistencia a localstorage
   async agregarAsistencia(asis: Asistencia) {
     this.asistencias = (await this.storage?.get('asistencias')) || [];
     const nuevaAsis: Asistencia = {
@@ -134,6 +134,14 @@ export class StorageService {
     this.asistencias.push(nuevaAsis);
     await this.storage?.set('asistencias', this.asistencias);
     return nuevaAsis;
+  }
+
+  // Método para obtener todas las asistencias
+  async obtenerAsistencias(): Promise<Asistencia[]> {
+    if (!this.storage) {
+      throw new Error('Storage no está inicializado');
+    }
+    return (await this.storage.get('asistencias')) || [];
   }
 }
 

@@ -12,6 +12,18 @@
       </ion-toolbar>
     </ion-header>
   </div>
+  <ion-content class="ion-padding">
+    <ion-card *ngFor="let asis of asistencia">
+      <ion-card-header>
+        <ion-card-subtitle> {{ asis.idAsistencia }} </ion-card-subtitle>
+        <ion-card-title> {{ asis.nombreUsuario }} </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>ID Clase: {{ asis.idClase }}</p>
+        <p>Hora de asistencia: {{ asis.horaAsistencia }}</p>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
 </ion-content>
 
 <ion-content

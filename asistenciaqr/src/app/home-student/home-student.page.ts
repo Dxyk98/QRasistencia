@@ -15,6 +15,7 @@ export class HomeStudentPage implements OnInit {
   isCameraPermission: boolean = false;
   usuario: { nombre: string; carrera: string } = { nombre: '', carrera: '' };
   clases: Clase[] = [];
+  asistencia: Asistencia[] = [];
 
   constructor(
     private userService: UserService,
@@ -78,9 +79,24 @@ export class HomeStudentPage implements OnInit {
     };
     this.html5QrCode = new Html5QrcodeScanner('reader', config, true); //Se inicializa el escaner con el ID reader y la configuración determinada. El tercer parámetro 'true' es para habilitar la desactivacion de forma automatica
     this.html5QrCode.render(
-      (result) => {
+      async (result) => {
         this.scannerResult = result;
         console.log('resultado del scanner', result); //callback de exito, al escanear el código QR exitosamente
+
+        const nuevaAsistencia: Asistencia = {
+          idAsistencia: '', // Este campo se llenará en el servicio al generar el ID
+          idClase: result, // Asume que el resultado del QR es el ID de la clase
+          nombreUsuario: this.usuario.nombre, // Asigna el nombre del usuario actual
+          horaAsistencia: new Date().toISOString(), // Hora actual en formato ISO
+        };
+
+        const asistenciaGuardada = await this.storageService.agregarAsistencia(
+          nuevaAsistencia
+        );
+        console.log('Asistencia guardada:', asistenciaGuardada); // Verifica que se haya guardado correctamente
+
+        // Muestra un mensaje de éxito
+        this.mostrarMensaje('Asistencia guardada exitosamente');
       },
       (error) => {
         console.warn('error al escanear codigo QR', error); //callback, si ocurre un error, se imprime una advertencia en la consola.
@@ -129,4 +145,12 @@ interface Clase {
     id: '';
     nombre: '';
   };
+}
+
+//interface asistencia
+interface Asistencia {
+  idAsistencia: string;
+  idClase: string;
+  nombreUsuario: string;
+  horaAsistencia: string;
 }

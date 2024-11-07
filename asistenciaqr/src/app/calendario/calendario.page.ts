@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Platform } from '@ionic/angular';
+import { StorageService } from '../storage.service';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-calendario',
@@ -7,20 +8,49 @@ import { Platform } from '@ionic/angular';
   styleUrls: ['./calendario.page.scss'],
 })
 export class CalendarioPage implements OnInit {
+  constructor(
+    private storage: StorageService,
+    private toastController: ToastController
+  ) {}
+  asistencia: Asistencia[] = [];
+
+  async ngOnInit() {
+    await this.storage.init(); //se llama al servicio publico
+    this.checkIfMobile();
+    window.addEventListener('resize', () => this.checkIfMobile());
+    this.cargarAsistencia();
+  }
+
   isMobile: boolean = true;
-
-  constructor(private platform: Platform) {}
-
-  ngOnInit() {
-    this.isMobile =
-      this.platform.is('mobile') ||
-      this.platform.is('tablet') ||
-      this.isScreenSmall();
-    console.log('isMobile:', this.isMobile);
+  private checkIfMobile() {
+    this.isMobile = window.innerWidth < 768;
   }
 
-  //pantalla permitida como celuar, si es mayor se motrara un mensaje
-  private isScreenSmall(): boolean {
-    return window.innerWidth < 768;
+  //mensaje de alerta para ver si esta todo correcto
+  async mostrarMensaje(mensaje: string) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 2000,
+    });
+    toast.present();
   }
+
+  async cargarAsistencia() {
+    try {
+      const asistencia = await this.storage.obtenerAsistencias();
+      this.asistencia = asistencia || [];
+      console.log(this.asistencia);
+    } catch (error) {
+      console.error('Error al cargar clases', error);
+      this.mostrarMensaje('Error al cargar las clases');
+    }
+  }
+}
+
+//interface asistencia
+interface Asistencia {
+  idAsistencia: string;
+  idClase: string;
+  nombreUsuario: string;
+  horaAsistencia: string;
 }
