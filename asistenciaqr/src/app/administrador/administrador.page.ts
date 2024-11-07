@@ -194,4 +194,38 @@ export class AdministradorPage implements OnInit {
       console.error(error);
     }
   }
+
+  editar(email: string) {
+    const personaSeleccionada = this.personas.find(
+      (persona) => persona.email === email
+    );
+    if (personaSeleccionada) {
+      this.personaForm.patchValue({
+        nombre: personaSeleccionada.nombre,
+        apellido: personaSeleccionada.apellido,
+        carrera: personaSeleccionada.carrera,
+        email: personaSeleccionada.email,
+        contrasena: personaSeleccionada.contrasena,
+      });
+    }
+  }
+
+  // Ejemplo de función para guardar (puedes adaptarla si es necesario)
+  // Ejemplo de función para guardar (adaptada para actualizar si ya existe)
+  guardarCambios() {
+    const persona = this.personaForm.value;
+    // Buscar si la persona ya existe en el array `personas`
+    const index = this.personas.findIndex((p) => p.email === persona.email);
+    if (index !== -1) {
+      // Si la persona existe, actualiza sus datos
+      this.personas[index] = persona;
+    } else {
+      // Si la persona no existe, agrégala al array
+      this.personas.push(persona);
+    }
+    // Guardar cambios en el servicio para persistencia
+    this.storageService.guardarCambios(persona);
+    // Resetear el formulario
+    this.personaForm.reset();
+  }
 }

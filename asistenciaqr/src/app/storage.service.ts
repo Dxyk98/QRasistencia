@@ -129,4 +129,17 @@ export class StorageService {
     this.clases = this.clases.filter((c) => c.id !== id);
     await this.storage?.set('clases', this.clases);
   }
+
+  guardarCambios(personaActualizada: any) {
+    const index = this.datos.findIndex(
+      (p) => p.email === personaActualizada.email
+    );
+    if (index !== -1) {
+      // Si la persona existe, actualizamos sus datos
+      this.datos[index] = personaActualizada;
+    } else {
+      // Si la persona no existe, la agregamos
+      this.datos.push(personaActualizada);
+    }
+  }
 }

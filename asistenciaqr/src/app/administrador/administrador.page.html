@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title>
       <img
-        src="../../assets/icon/LogoDuoc.png"
+        src="../../assets/icon/LogoDuoc.webp"
         alt="Duocuc Logo"
         class="logo"
       />
@@ -116,9 +116,12 @@
           >
         </ion-item>
 
-        <ion-button expand="block" type="submit" [disabled]="!personaForm.valid"
+        <ion-button type="submit" [disabled]="!personaForm.valid"
           >Guardar Persona</ion-button
         >
+        <ion-button (click)="guardarCambios()" [disabled]="!personaForm.valid">
+          Guardar Cambios
+        </ion-button>
       </form>
     </div>
     <div class="col-sm-6">
@@ -132,7 +135,7 @@
             <p>Email: {{persona.email}}</p>
             <p>Carrera: {{persona.carrera}}</p>
           </ion-label>
-          <ion-button slot="end" (click)="obtenerPersona(persona.email)"
+          <ion-button slot="end" (click)="editar(persona.email)"
             >Ver</ion-button
           >
           <ion-button
@@ -231,12 +234,7 @@
             </ion-select-option>
           </ion-select>
         </ion-item>
-
-        <ion-button
-          expand="block"
-          type="submit"
-          [disabled]="!claseForm.valid"
-          class="pt-2"
+        <ion-button type="submit" [disabled]="!claseForm.valid" class="pt-2"
           >Guardar Clase</ion-button
         >
       </form>
