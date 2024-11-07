@@ -16,22 +16,25 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <div *ngIf="claseHoy; else noClaseHoy">
-        <h2>Clase de hoy</h2>
-        <p><strong>Nombre:</strong> {{ claseHoy.nombre }}</p>
-        <p><strong>Carrera:</strong> {{ claseHoy.carreraClase }}</p>
-        <p>
-          <strong>Horario:</strong> {{ claseHoy.horaInicio }} - {{
-          claseHoy.horaTermino }}
-        </p>
-        <p><strong>Jornada:</strong> {{ claseHoy.diurnoVespertino }}</p>
-        <ion-button (click)="setQrOpen(true)" [disabled]="!createdCode">
-          Generar QR de Asistencia
-        </ion-button>
-      </div>
-      <ng-template #noClaseHoy>
-        <p>No hay clases programadas para hoy.</p>
-      </ng-template>
+      <!-- Relleno -->
+      <ion-list>
+        <ion-list-header>
+          <ion-label>Lista de Clases</ion-label>
+        </ion-list-header>
+        <ion-item *ngFor="let clase of clases">
+          <ion-label>
+            <h2>{{ clase.nombre }}</h2>
+            <h3>{{ clase.carreraClase }}</h3>
+            <p>
+              Profesor: {{ clase.profesor.nombre }} ({{ clase.profesor.id }})
+            </p>
+            <p>ID: {{ clase.id }}</p>
+            <p>Horario: {{ clase.horaInicio }} - {{ clase.horaTermino }}</p>
+            <p>Jornada: {{ clase.diurnoVespertino }}</p>
+            <p>Día(s): {{ clase.dias }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
     </ion-content>
   </div>
 </ion-content>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StorageService } from '../storage.service';
+import { ToastController } from '@ionic/angular';
 
-//interface clase
 interface Clase {
   id: string;
   nombre: string;
@@ -11,8 +11,8 @@ interface Clase {
   diurnoVespertino: string;
   dias: string;
   profesor: {
-    id: '';
-    nombre: '';
+    id: string;
+    nombre: string;
   };
 }
 
@@ -23,29 +23,48 @@ interface Clase {
 })
 export class ProfesorHomePage implements OnInit {
   isMobile: boolean = false;
-  isQrOpen: boolean = false;
+  clases: Clase[] = [];
   qrData: string = '';
   createdCode: string = '';
+  claseHoy: any; // Propiedad para almacenar la clase de hoy
 
-  constructor(private storageService: StorageService) {}
+  constructor(
+    private storageService: StorageService,
+    private toastController: ToastController
+  ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.storageService.init(); //se llama al servicio publico
     this.checkIfMobile();
     window.addEventListener('resize', () => this.checkIfMobile());
-    this.generarQrParaClase;
+    this.cargarClases();
   }
 
   private checkIfMobile() {
     this.isMobile = window.innerWidth < 768;
   }
 
-  setQrOpen(isOpen: boolean) {
-    this.isQrOpen = isOpen;
+  async cargarClases() {
+    try {
+      this.clases = await this.storageService.obtenerCalses();
+      console.log('Clases cargadas:', this.clases);
+    } catch (error) {
+      console.error('Error al cargar clases:', error);
+      await this.mostrarMensaje('Error al cargar las clases');
+    }
   }
 
-  claseHoy: any;
+  async mostrarMensaje(mensaje: string) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 2000,
+    });
+    toast.present();
+  }
+
   async generarQrParaClase() {
     const clasesHoy: Clase[] = await this.storageService.obtenerCalses();
+
     const diaActual = new Date().getDay();
     const diasSemana = [
       'domingo',
@@ -57,8 +76,10 @@ export class ProfesorHomePage implements OnInit {
       'sábado',
     ];
     const nombreDiaActual = diasSemana[diaActual];
+
     // Buscar la clase para el día actual
     const claseHoy = clasesHoy.find((c) => c.dias === nombreDiaActual);
+
     if (claseHoy) {
       // Generar el QR para la clase encontrada
       this.qrData = JSON.stringify({

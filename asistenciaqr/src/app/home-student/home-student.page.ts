@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Html5QrcodeScanner, Html5QrcodeScanType } from 'html5-qrcode';
 import { UserService } from '../user.service';
+import { StorageService } from '../storage.service';
 
 @Component({
   selector: 'app-home-student',
@@ -11,13 +12,19 @@ export class HomeStudentPage implements OnInit {
   private html5QrCode: Html5QrcodeScanner | null = null;
   scannerResult: string | null = null; //string de escaner de QR
   isCameraPermission: boolean = false;
+  usuario: { nombre: string; carrera: string } = { nombre: '', carrera: '' };
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private storageService: StorageService
+  ) {}
 
   //se determinan las pantallas
   async ngOnInit() {
+    await this.storageService.init(); //se llama al servicio publico
     this.checkIfMobile();
     window.addEventListener('resize', () => this.checkIfMobile());
+    this.usuario = this.userService.obtenerUsuario();
   }
 
   isMobile: boolean = true;

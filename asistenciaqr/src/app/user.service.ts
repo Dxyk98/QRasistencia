@@ -52,4 +52,11 @@ export class UserService {
     const personas = await this.storage.obtenerDatos('personas');
     return personas.some((persona: any) => persona.email === email);
   }
+
+  obtenerUsuario() {
+    return {
+      nombre: this.usuarioAutenticado.nombre,
+      carrera: this.usuarioAutenticado.carrera,
+    };
+  }
 }
