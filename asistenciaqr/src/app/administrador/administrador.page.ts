@@ -211,8 +211,6 @@ export class AdministradorPage implements OnInit {
     }
   }
 
-  // Ejemplo de función para guardar (puedes adaptarla si es necesario)
-  // Ejemplo de función para guardar (adaptada para actualizar si ya existe)
   guardarCambios() {
     const persona = this.personaForm.value;
     // Buscar si la persona ya existe en el array `personas`

@@ -1,28 +1,7 @@
 import { Injectable } from '@angular/core';
+import { NumberValueAccessor } from '@angular/forms';
 import { Storage } from '@ionic/storage-angular';
-//interface persona
-interface Persona {
-  identificador: string;
-  nombre: string;
-  apellido: string;
-  carrera: string;
-  email: string;
-  contrasena: string;
-}
-//interface clase
-interface Clase {
-  id: string;
-  nombre: string;
-  carreraClase: string;
-  horaInicio: string;
-  horaTermino: string;
-  diurnoVespertino: string;
-  dias: string;
-  profesor: {
-    id: '';
-    nombre: '';
-  };
-}
+import { afterWrite } from '@popperjs/core';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +10,7 @@ export class StorageService {
   datos: any[] = [];
   dato: any = {};
   clases: Clase[] = [];
+  asistencias: Asistencia[] = [];
   private storage: Storage | null = null;
 
   constructor(private storageInstance: Storage) {
@@ -142,4 +122,48 @@ export class StorageService {
       this.datos.push(personaActualizada);
     }
   }
+
+  //metodo para agregar clase
+  async agregarAsistencia(asis: Asistencia) {
+    this.asistencias = (await this.storage?.get('asistencias')) || [];
+    const nuevaAsis: Asistencia = {
+      ...asis,
+      idAsistencia: this.generarId(),
+    };
+
+    this.asistencias.push(nuevaAsis);
+    await this.storage?.set('asistencias', this.asistencias);
+    return nuevaAsis;
+  }
+}
+
+//interface persona
+interface Persona {
+  identificador: string;
+  nombre: string;
+  apellido: string;
+  carrera: string;
+  email: string;
+  contrasena: string;
+}
+//interface clase
+interface Clase {
+  id: string;
+  nombre: string;
+  carreraClase: string;
+  horaInicio: string;
+  horaTermino: string;
+  diurnoVespertino: string;
+  dias: string;
+  profesor: {
+    id: '';
+    nombre: '';
+  };
+}
+//interface asistencia
+interface Asistencia {
+  idAsistencia: string;
+  idClase: string;
+  nombreUsuario: string;
+  horaAsistencia: string;
 }
