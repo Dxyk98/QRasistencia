@@ -64,6 +64,7 @@ export class AdministradorPage implements OnInit {
     });
     this.claseForm = this.formBuilder.group({
       nombre: ['', [Validators.required, Validators.minLength(2)]],
+      carreraClase: ['', Validators.required],
       horaInicio: ['', Validators.required],
       horaTermino: ['', Validators.required],
       diurnoVespertino: ['', Validators.required],

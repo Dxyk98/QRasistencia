@@ -11,8 +11,8 @@
 </ion-header>
 <ion-content class="ion-padding">
   <div class="row pt-2">
-    <h2>Formulario de personas</h2>
     <div class="col-sm-6">
+      <h2>Formulario de personas</h2>
       <form [formGroup]="personaForm" (ngSubmit)="guardarPersona()">
         <ion-item class="p-2">
           <ion-input
@@ -125,32 +125,7 @@
       </form>
     </div>
     <div class="col-sm-6">
-      <ion-list>
-        <ion-list-header>
-          <ion-label>Lista de Personas</ion-label>
-        </ion-list-header>
-        <ion-item *ngFor="let persona of personas">
-          <ion-label>
-            <h2>{{persona.nombre}} {{persona.apellido}}</h2>
-            <p>Email: {{persona.email}}</p>
-            <p>Carrera: {{persona.carrera}}</p>
-          </ion-label>
-          <ion-button slot="end" (click)="editar(persona.email)"
-            >Ver</ion-button
-          >
-          <ion-button
-            slot="end"
-            color="danger"
-            (click)="eliminarPersona(persona.email)"
-            >Eliminar</ion-button
-          >
-        </ion-item>
-      </ion-list>
-    </div>
-  </div>
-  <div class="row pt-2">
-    <h2>Formulario Clases</h2>
-    <div class="col-sm-6">
+      <h2>Formulario Clases</h2>
       <form [formGroup]="claseForm" (ngSubmit)="guardarClase()">
         <ion-item class="pt-2">
           <ion-input
@@ -167,6 +142,7 @@
             placeholder="Elija carrera"
             fill="outline"
             formControlName="carreraClase"
+            required
           >
             <ion-select-option
               *ngFor="let carrera of carreras"
@@ -239,6 +215,31 @@
         >
       </form>
     </div>
+  </div>
+  <div class="row pt-2">
+    <div class="col-sm-6">
+      <ion-list>
+        <ion-list-header>
+          <ion-label>Lista de Personas</ion-label>
+        </ion-list-header>
+        <ion-item *ngFor="let persona of personas">
+          <ion-label>
+            <h2>{{persona.nombre}} {{persona.apellido}}</h2>
+            <p>Email: {{persona.email}}</p>
+            <p>Carrera: {{persona.carrera}}</p>
+          </ion-label>
+          <ion-button slot="end" (click)="editar(persona.email)"
+            >Ver</ion-button
+          >
+          <ion-button
+            slot="end"
+            color="danger"
+            (click)="eliminarPersona(persona.email)"
+            >Eliminar</ion-button
+          >
+        </ion-item>
+      </ion-list>
+    </div>
     <div class="col-sm-6">
       <ion-list>
         <ion-list-header>
@@ -254,6 +255,7 @@
             <p>Hora de término: {{ clase.horaTermino }}</p>
             <p>Diurno / Vespertino: {{ clase.diurnoVespertino }}</p>
             <p>Dia(s): {{ clase.dias }}</p>
+            <p>Carrera: {{ clase.carreraClase }}</p>
           </ion-label>
           <ion-button
             color="danger"

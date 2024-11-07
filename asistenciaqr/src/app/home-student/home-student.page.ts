@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Html5QrcodeScanner, Html5QrcodeScanType } from 'html5-qrcode';
 import { UserService } from '../user.service';
 import { StorageService } from '../storage.service';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home-student',
@@ -13,10 +14,12 @@ export class HomeStudentPage implements OnInit {
   scannerResult: string | null = null; //string de escaner de QR
   isCameraPermission: boolean = false;
   usuario: { nombre: string; carrera: string } = { nombre: '', carrera: '' };
+  clases: Clase[] = [];
 
   constructor(
     private userService: UserService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private toastController: ToastController
   ) {}
 
   //se determinan las pantallas
@@ -25,6 +28,7 @@ export class HomeStudentPage implements OnInit {
     this.checkIfMobile();
     window.addEventListener('resize', () => this.checkIfMobile());
     this.usuario = this.userService.obtenerUsuario();
+    this.cargarClases();
   }
 
   isMobile: boolean = true;
@@ -89,4 +93,40 @@ export class HomeStudentPage implements OnInit {
       this.html5QrCode.clear(); //debería limpiar cualquier recurso usado por el escaner.
     }
   }
+
+  //metodo para cargar las clases
+  async cargarClases() {
+    try {
+      const clases = await this.storageService.obtenerClases();
+      this.clases = clases || [];
+      console.log(this.clases);
+    } catch (error) {
+      console.error('Error al cargar clases', error);
+      this.mostrarMensaje('Error al cargar las clases');
+    }
+  }
+
+  //mensaje de alerta para ver si esta todo correcto
+  async mostrarMensaje(mensaje: string) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 2000,
+    });
+    toast.present();
+  }
+}
+
+//interface clase
+interface Clase {
+  id: string;
+  nombre: string;
+  carreraClase: string;
+  horaInicio: string;
+  horaTermino: string;
+  diurnoVespertino: string;
+  dias: string;
+  profesor: {
+    id: '';
+    nombre: '';
+  };
 }

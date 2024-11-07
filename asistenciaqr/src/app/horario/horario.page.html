@@ -11,6 +11,19 @@
         </ion-title>
       </ion-toolbar>
     </ion-header>
+    <ion-content class="ion-padding">
+      <ion-card *ngFor="let clase of clases">
+        <ion-card-header>
+          <ion-card-subtitle> {{ clase.profesor.nombre }} </ion-card-subtitle>
+          <ion-card-title> {{ clase.nombre }} </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p>ID: {{ clase.id }}</p>
+          <p>Hora: {{ clase.horaInicio }} - {{clase.horaTermino}}</p>
+          <p>Dia(s): {{ clase.dias }}</p>
+        </ion-card-content>
+      </ion-card>
+    </ion-content>
   </div>
 </ion-content>
 
