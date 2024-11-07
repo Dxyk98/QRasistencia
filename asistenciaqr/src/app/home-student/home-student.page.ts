@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Html5QrcodeScanner, Html5QrcodeScanType } from 'html5-qrcode';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-home-student',
@@ -7,35 +8,35 @@ import { Html5QrcodeScanner, Html5QrcodeScanType } from 'html5-qrcode';
   styleUrls: ['./home-student.page.scss'],
 })
 export class HomeStudentPage implements OnInit {
-  isMobile: boolean = true;
-  isModalCredential: boolean = false; //Boolean para abrir y cerrar modal de credencial
-  isModalSettings: boolean = false; //modal de configuraciones o ajustes
-  isModalScanner: boolean = false; //modal de scanner de clases
-  scannerResult: string | null = null; //string de escaner de QR
   private html5QrCode: Html5QrcodeScanner | null = null;
+  scannerResult: string | null = null; //string de escaner de QR
   isCameraPermission: boolean = false;
 
-  constructor() {}
+  constructor(private userService: UserService) {}
 
   //se determinan las pantallas
-  ngOnInit() {
+  async ngOnInit() {
     this.checkIfMobile();
     window.addEventListener('resize', () => this.checkIfMobile());
   }
 
+  isMobile: boolean = true;
   private checkIfMobile() {
     this.isMobile = window.innerWidth < 768;
   }
 
   //funciones para abrir modales.
+  isModalScanner: boolean = false; //modal de scanner de clases
   setScannerOpen(isOpen: boolean) {
     this.isModalScanner = isOpen;
   }
 
+  isModalCredential: boolean = false; //Boolean para abrir y cerrar modal de credencial
   setCredentialOpen(isOpen: boolean) {
     this.isModalCredential = isOpen;
   }
 
+  isModalSettings: boolean = false; //modal de configuraciones o ajustes
   setSettingsOpen(isOpen: boolean) {
     this.isModalSettings = isOpen;
   }

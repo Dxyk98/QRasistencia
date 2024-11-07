@@ -1,4 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { StorageService } from '../storage.service';
+
+//interface clase
+interface Clase {
+  id: string;
+  nombre: string;
+  carreraClase: string;
+  horaInicio: string;
+  horaTermino: string;
+  diurnoVespertino: string;
+  dias: string;
+  profesor: {
+    id: '';
+    nombre: '';
+  };
+}
 
 @Component({
   selector: 'app-profesor-home',
@@ -8,14 +24,15 @@ import { Component, OnInit } from '@angular/core';
 export class ProfesorHomePage implements OnInit {
   isMobile: boolean = false;
   isQrOpen: boolean = false;
-  qrData: string = 'texto de prueba';
-  createdCode: string = 'Clase 1';
+  qrData: string = '';
+  createdCode: string = '';
 
-  constructor() {}
+  constructor(private storageService: StorageService) {}
 
   ngOnInit() {
     this.checkIfMobile();
     window.addEventListener('resize', () => this.checkIfMobile());
+    this.generarQrParaClase;
   }
 
   private checkIfMobile() {
@@ -24,5 +41,35 @@ export class ProfesorHomePage implements OnInit {
 
   setQrOpen(isOpen: boolean) {
     this.isQrOpen = isOpen;
+  }
+
+  claseHoy: any;
+  async generarQrParaClase() {
+    const clasesHoy: Clase[] = await this.storageService.obtenerCalses();
+    const diaActual = new Date().getDay();
+    const diasSemana = [
+      'domingo',
+      'lunes',
+      'martes',
+      'miércoles',
+      'jueves',
+      'viernes',
+      'sábado',
+    ];
+    const nombreDiaActual = diasSemana[diaActual];
+    // Buscar la clase para el día actual
+    const claseHoy = clasesHoy.find((c) => c.dias === nombreDiaActual);
+    if (claseHoy) {
+      // Generar el QR para la clase encontrada
+      this.qrData = JSON.stringify({
+        id: claseHoy.id,
+        nombre: claseHoy.nombre,
+        diaSemana: nombreDiaActual,
+      });
+      this.createdCode = this.qrData;
+      this.claseHoy = claseHoy; // Asigna la clase a `claseHoy` para mostrar en la interfaz
+    } else {
+      console.log('No hay clase programada para hoy');
+    }
   }
 }

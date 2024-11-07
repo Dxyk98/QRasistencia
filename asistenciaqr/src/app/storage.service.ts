@@ -13,10 +13,15 @@ interface Persona {
 interface Clase {
   id: string;
   nombre: string;
+  carreraClase: string;
   horaInicio: string;
   horaTermino: string;
   diurnoVespertino: string;
   dias: string;
+  profesor: {
+    id: '';
+    nombre: '';
+  };
 }
 
 @Injectable({

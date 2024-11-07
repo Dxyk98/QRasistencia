@@ -10,6 +10,7 @@ export class UserService {
   //  { email: 'profesor@profesor.duoc.cl', password: 'test6789' },
   //];
   constructor(private storage: StorageService) {}
+  private usuarioAutenticado: any = null;
   //funcion para traer personas del storage
   //async cargarPersonas() {
   //  try {
@@ -32,10 +33,18 @@ export class UserService {
   //autenticar usuario por email y contraseña
   async autenticar(email: string, contraseña: string): Promise<boolean> {
     const personas = await this.storage.obtenerDatos('personas');
-    return personas.some(
+    const usuario = personas.find(
       (persona: any) =>
         persona.email === email && persona.contrasena === contraseña
     );
+
+    if (usuario) {
+      this.usuarioAutenticado = usuario;
+      console.log('Usuario autenticado:', this.usuarioAutenticado);
+      return true;
+    }
+    console.log('Autenticación fallida');
+    return false;
   }
 
   //solo por email

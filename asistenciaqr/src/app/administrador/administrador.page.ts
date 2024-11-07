@@ -12,14 +12,19 @@ interface Persona {
   email: string;
   contrasena: string;
 }
-//interface clases con atributos
+//interface clase
 interface Clase {
   id: string;
   nombre: string;
+  carreraClase: string;
   horaInicio: string;
   horaTermino: string;
   diurnoVespertino: string;
   dias: string;
+  profesor: {
+    id: '';
+    nombre: '';
+  };
 }
 
 @Component({
@@ -63,6 +68,7 @@ export class AdministradorPage implements OnInit {
       horaTermino: ['', Validators.required],
       diurnoVespertino: ['', Validators.required],
       dias: ['', Validators.required],
+      profesor: ['', Validators.required],
     });
   }
 

@@ -160,6 +160,21 @@
           ></ion-input>
         </ion-item>
         <ion-item class="pt-2">
+          <ion-select
+            label="Carrera"
+            placeholder="Elija carrera"
+            fill="outline"
+            formControlName="carreraClase"
+          >
+            <ion-select-option
+              *ngFor="let carrera of carreras"
+              [value]="carrera"
+            >
+              {{ carrera }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item class="pt-2">
           <ion-input
             label="Hora Inicio"
             label-placement="floating"
@@ -202,6 +217,22 @@
             </ion-select-option>
           </ion-select>
         </ion-item>
+        <ion-item class="pt-2">
+          <ion-select
+            label="Profesor"
+            placeholder="Seleccione un Profesor"
+            fill="outline"
+            formControlName="profesor"
+          >
+            <ion-select-option
+              *ngFor="let persona of personas"
+              [value]="{ id: persona.identificador, nombre: persona.nombre }"
+            >
+              {{ persona.nombre }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
         <ion-button
           expand="block"
           type="submit"
@@ -218,7 +249,9 @@
         </ion-list-header>
         <ion-item *ngFor="let clase of clases">
           <ion-label>
-            <h2>{{ clase.nombre }}</h2>
+            <h1>{{ clase.nombre }}</h1>
+            <h2></h2>
+            <h3>{{ clase.profesor.nombre }}, {{ clase.profesor.id }}</h3>
             <p>ID: {{ clase.id }}</p>
             <p>Hora de inicio: {{ clase.horaInicio }}</p>
             <p>Hora de término: {{ clase.horaTermino }}</p>
