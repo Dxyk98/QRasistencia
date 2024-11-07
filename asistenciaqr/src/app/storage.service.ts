@@ -115,7 +115,7 @@ export class StorageService {
   }
 
   //metodo para obtener todas las clases
-  async obtenerCalses() {
+  async obtenerClases() {
     if (!this.storage) {
       throw new Error('Storage no esta inicializado');
     }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StorageService } from '../storage.service';
 import { ToastController } from '@ionic/angular';
+import { UserService } from '../user.service';
 
 interface Clase {
   id: string;
@@ -27,10 +28,14 @@ export class ProfesorHomePage implements OnInit {
   qrData: string = '';
   createdCode: string = '';
   claseHoy: any; // Propiedad para almacenar la clase de hoy
+  isModalOpen = false;
+  usuario: any; // Store user data here
+  selectedProfesorId: string = ''; // Store the selected professor ID
 
   constructor(
     private storageService: StorageService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private userService: UserService
   ) {}
 
   async ngOnInit() {
@@ -38,15 +43,35 @@ export class ProfesorHomePage implements OnInit {
     this.checkIfMobile();
     window.addEventListener('resize', () => this.checkIfMobile());
     this.cargarClases();
+    this.usuario = await this.userService.obtenerUsuario(); // Fetch logged-in user
+    this.selectedProfesorId = this.usuario.id; // Assign the professor's ID
   }
 
   private checkIfMobile() {
     this.isMobile = window.innerWidth < 768;
   }
 
+  setQData(clase: Clase) {
+    this.qrData = clase.id; // Set the selected class's ID as QR data
+    this.generateQrCode(); // Generate the QR code based on the selected class's ID
+    this.setOpen(true); // Open the modal
+  }
+
+  generateQrCode() {
+    if (this.qrData) {
+      this.createdCode = this.qrData; // Generate the QR code with the QR data
+    } else {
+      console.error('QR data is not set. Please select a class.');
+    }
+  }
+
+  setOpen(isOpen: boolean) {
+    this.isModalOpen = isOpen;
+  }
+
   async cargarClases() {
     try {
-      this.clases = await this.storageService.obtenerCalses();
+      this.clases = await this.storageService.obtenerClases();
       console.log('Clases cargadas:', this.clases);
     } catch (error) {
       console.error('Error al cargar clases:', error);
@@ -60,37 +85,5 @@ export class ProfesorHomePage implements OnInit {
       duration: 2000,
     });
     toast.present();
-  }
-
-  async generarQrParaClase() {
-    const clasesHoy: Clase[] = await this.storageService.obtenerCalses();
-
-    const diaActual = new Date().getDay();
-    const diasSemana = [
-      'domingo',
-      'lunes',
-      'martes',
-      'miércoles',
-      'jueves',
-      'viernes',
-      'sábado',
-    ];
-    const nombreDiaActual = diasSemana[diaActual];
-
-    // Buscar la clase para el día actual
-    const claseHoy = clasesHoy.find((c) => c.dias === nombreDiaActual);
-
-    if (claseHoy) {
-      // Generar el QR para la clase encontrada
-      this.qrData = JSON.stringify({
-        id: claseHoy.id,
-        nombre: claseHoy.nombre,
-        diaSemana: nombreDiaActual,
-      });
-      this.createdCode = this.qrData;
-      this.claseHoy = claseHoy; // Asigna la clase a `claseHoy` para mostrar en la interfaz
-    } else {
-      console.log('No hay clase programada para hoy');
-    }
   }
 }

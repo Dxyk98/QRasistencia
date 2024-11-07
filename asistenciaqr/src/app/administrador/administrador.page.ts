@@ -156,7 +156,7 @@ export class AdministradorPage implements OnInit {
   //metodo para cargar las clases
   async cargarClases() {
     try {
-      const clases = await this.storageService.obtenerCalses();
+      const clases = await this.storageService.obtenerClases();
       this.clases = clases || [];
       console.log(this.clases);
     } catch (error) {
