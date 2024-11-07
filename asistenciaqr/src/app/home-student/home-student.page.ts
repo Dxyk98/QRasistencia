@@ -97,6 +97,8 @@ export class HomeStudentPage implements OnInit {
 
         // Muestra un mensaje de éxito
         this.mostrarMensaje('Asistencia guardada exitosamente');
+        // Detener el escáner para evitar múltiples registros
+        this.html5QrCode?.clear();
       },
       (error) => {
         console.warn('error al escanear codigo QR', error); //callback, si ocurre un error, se imprime una advertencia en la consola.
