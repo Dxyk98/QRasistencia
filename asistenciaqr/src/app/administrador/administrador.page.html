@@ -1,123 +1,271 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      <img
+        src="../../assets/icon/LogoDuoc.png"
+        alt="Duocuc Logo"
+        class="logo"
+      />
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
 <ion-content class="ion-padding">
-  <form [formGroup]="personaForm" (ngSubmit)="guardarPersona()">
-    <ion-item class="p-2">
-      <ion-input
-        label="Nombre"
-        label-placement="floating"
-        fill="outline"
-        placeholder=" Ingrese Nombre"
-        formControlName="nombre"
-        required
-      ></ion-input>
-    </ion-item>
-    <ion-item
-      *ngIf="personaForm.get('nombre')?.invalid && (personaForm.get('nombre')?.dirty || personaForm.get('nombre')?.touched)"
-      class="py-2"
-    >
-      <ion-text color="danger"
-        >El nombre es requerido y debe tener al menos 2 caracteres.</ion-text
-      >
-    </ion-item>
+  <div class="row pt-2">
+    <h2>Formulario de personas</h2>
 
-    <ion-item class="p-2">
-      <ion-input
-        label="Apellido"
-        label-placement="floating"
-        fill="outline"
-        placeholder=" Ingrese apellido"
-        formControlName="apellido"
-        required
-      ></ion-input>
-    </ion-item>
-    <ion-item
-      *ngIf="personaForm.get('apellido')?.invalid && (personaForm.get('apellido')?.dirty || personaForm.get('apellido')?.touched)"
-      class="py-2"
-    >
-      <ion-text color="danger"
-        >El apellido es requerido y debe tener al menos 2 caracteres.</ion-text
-      >
-    </ion-item>
+    <div class="col-sm-6">
+      <form [formGroup]="personaForm" (ngSubmit)="guardarPersona()">
+        <ion-item class="p-2">
+          <ion-input
+            label="Nombre"
+            label-placement="floating"
+            fill="outline"
+            placeholder=" Ingrese Nombre"
+            formControlName="nombre"
+            required
+          ></ion-input>
+        </ion-item>
+        <ion-item
+          *ngIf="personaForm.get('nombre')?.invalid && (personaForm.get('nombre')?.dirty || personaForm.get('nombre')?.touched)"
+          class="py-2"
+        >
+          <ion-text color="danger"
+            >El nombre es requerido y debe tener al menos 2
+            caracteres.</ion-text
+          >
+        </ion-item>
 
-    <ion-item class="p-2">
-      <ion-select
-        label="Carrera"
-        label-placement="floating"
-        fill="outline"
-        formControlName="carrera"
-        required
-      >
-        <ion-select-option *ngFor="let carrera of carreras" [value]="carrera">
-          {{ carrera }}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item
-      *ngIf="personaForm.get('carrera')?.invalid && (personaForm.get('carrera')?.dirty || personaForm.get('carrera')?.touched)"
-      class="py-2"
-    >
-      <ion-text color="danger">La carrera es requerida.</ion-text>
-    </ion-item>
+        <ion-item class="p-2">
+          <ion-input
+            label="Apellido"
+            label-placement="floating"
+            fill="outline"
+            placeholder=" Ingrese apellido"
+            formControlName="apellido"
+            required
+          ></ion-input>
+        </ion-item>
+        <ion-item
+          *ngIf="personaForm.get('apellido')?.invalid && (personaForm.get('apellido')?.dirty || personaForm.get('apellido')?.touched)"
+          class="py-2"
+        >
+          <ion-text color="danger"
+            >El apellido es requerido y debe tener al menos 2
+            caracteres.</ion-text
+          >
+        </ion-item>
 
-    <ion-item class="p-2">
-      <ion-input
-        label="Email"
-        label-placement="floating"
-        fill="outline"
-        placeholder=" Ingrese email"
-        formControlName="email"
-        required
-      ></ion-input>
-    </ion-item>
-    <ion-item
-      *ngIf="personaForm.get('email')?.invalid && (personaForm.get('email')?.dirty || personaForm.get('email')?.touched)"
-      class="py-2"
-    >
-      <ion-text color="danger">Por favor, ingrese un email válido.</ion-text>
-    </ion-item>
+        <ion-item class="p-2">
+          <ion-select
+            label="Carrera"
+            label-placement="floating"
+            fill="outline"
+            formControlName="carrera"
+            required
+          >
+            <ion-select-option
+              *ngFor="let carrera of carreras"
+              [value]="carrera"
+            >
+              {{ carrera }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item
+          *ngIf="personaForm.get('carrera')?.invalid && (personaForm.get('carrera')?.dirty || personaForm.get('carrera')?.touched)"
+          class="py-2"
+        >
+          <ion-text color="danger">La carrera es requerida.</ion-text>
+        </ion-item>
 
-    <ion-item class="p-2">
-      <ion-input
-        label="Contraseña"
-        label-placement="floating"
-        type="password"
-        fill="outline"
-        placeholder=" Ingrese contraseña"
-        formControlName="contrasena"
-        required
-      ></ion-input>
-    </ion-item>
-    <ion-item
-      *ngIf="personaForm.get('contrasena')?.invalid && (personaForm.get('contrasena')?.dirty || personaForm.get('contrasena')?.touched)"
-      class="py-2"
-    >
-      <ion-text color="danger"
-        >La contraseña debe tener al menos 8 caracteres.</ion-text
-      >
-    </ion-item>
+        <ion-item class="p-2">
+          <ion-input
+            label="Email"
+            label-placement="floating"
+            fill="outline"
+            placeholder=" Ingrese email"
+            formControlName="email"
+            required
+          ></ion-input>
+        </ion-item>
+        <ion-item
+          *ngIf="personaForm.get('email')?.invalid && (personaForm.get('email')?.dirty || personaForm.get('email')?.touched)"
+          class="py-2"
+        >
+          <ion-text color="danger"
+            >Por favor, ingrese un email válido.</ion-text
+          >
+        </ion-item>
 
-    <ion-button expand="block" type="submit" [disabled]="!personaForm.valid"
-      >Guardar Persona</ion-button
-    >
-  </form>
+        <ion-item class="p-2">
+          <ion-input
+            label="Contraseña"
+            label-placement="floating"
+            type="password"
+            fill="outline"
+            placeholder=" Ingrese contraseña"
+            formControlName="contrasena"
+            required
+          ></ion-input>
+        </ion-item>
+        <ion-item
+          *ngIf="personaForm.get('contrasena')?.invalid && (personaForm.get('contrasena')?.dirty || personaForm.get('contrasena')?.touched)"
+          class="py-2"
+        >
+          <ion-text color="danger"
+            >La contraseña debe tener al menos 8 caracteres.</ion-text
+          >
+        </ion-item>
 
-  <ion-list>
-    <ion-list-header>
-      <ion-label>Lista de Personas</ion-label>
-    </ion-list-header>
-    <ion-item *ngFor="let persona of personas">
-      <ion-label>
-        <h2>{{ persona.nombre }} {{ persona.apellido }}</h2>
-        <p>{{ persona.email }}</p>
-      </ion-label>
-      <ion-button slot="end" (click)="obtenerPersona(persona.email)"
-        >Ver</ion-button
-      >
-      <ion-button
-        slot="end"
-        color="danger"
-        (click)="eliminarPersona(persona.email)"
-        >Eliminar</ion-button
-      >
-    </ion-item>
-  </ion-list>
+        <ion-button expand="block" type="submit" [disabled]="!personaForm.valid"
+          >Guardar Persona</ion-button
+        >
+      </form>
+    </div>
+    <div class="col-sm-6">
+      <ion-list>
+        <ion-list-header>
+          <ion-label>Lista de Personas</ion-label>
+        </ion-list-header>
+        <ion-item *ngFor="let persona of personas">
+          <ion-label>
+            <h2>{{persona.nombre}} {{persona.apellido}}</h2>
+            <p>Email: {{persona.email}}</p>
+            <p>Carrera: {{persona.carrera}}</p>
+          </ion-label>
+          <ion-button slot="end" (click)="obtenerPersona(persona.email)"
+            >Ver</ion-button
+          >
+          <ion-button
+            slot="end"
+            color="danger"
+            (click)="eliminarPersona(persona.email)"
+            >Eliminar</ion-button
+          >
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+  <div class="row pt-2">
+    <h2>Formulario Clases</h2>
+    <div class="col-sm-6">
+      <form [formGroup]="claseForm" (ngSubmit)="guardarClase()">
+        <ion-item class="pt-2">
+          <ion-input
+            label="Nombre de la clase"
+            label-placement="floating"
+            fill="outline"
+            formControlName="nombre"
+            type="text"
+          ></ion-input>
+        </ion-item>
+        <ion-item class="pt-2">
+          <ion-select
+            label="Carrera"
+            placeholder="Elija carrera"
+            fill="outline"
+            formControlName="carreraClase"
+          >
+            <ion-select-option
+              *ngFor="let carrera of carreras"
+              [value]="carrera"
+            >
+              {{ carrera }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item class="pt-2">
+          <ion-input
+            label="Hora Inicio"
+            label-placement="floating"
+            fill="outline"
+            formControlName="horaInicio"
+            type="time"
+          ></ion-input>
+        </ion-item>
+        <ion-item class="pt-2">
+          <ion-input
+            label="Hora Termino"
+            label-placement="floating"
+            fill="outline"
+            formControlName="horaTermino"
+            type="time"
+          ></ion-input>
+        </ion-item>
+        <ion-item class="pt-2">
+          <ion-select
+            label="Diurno o Vespertino"
+            placeholder="Seleccione horario"
+            fill="outline"
+            formControlName="diurnoVespertino"
+          >
+            <ion-select-option *ngFor="let hora of horario" [value]="hora">
+              {{ hora }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item class="pt-2">
+          <ion-select
+            label="Dia(s) Clase"
+            placeholder="Seleccione Día(s)"
+            fill="outline"
+            formControlName="dias"
+            [multiple]="true"
+          >
+            <ion-select-option *ngFor="let dia of diaSemana" [value]="dia">
+              {{ dia }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item class="pt-2">
+          <ion-select
+            label="Profesor"
+            placeholder="Seleccione un Profesor"
+            fill="outline"
+            formControlName="profesor"
+          >
+            <ion-select-option
+              *ngFor="let persona of personas"
+              [value]="{ id: persona.identificador, nombre: persona.nombre }"
+            >
+              {{ persona.nombre }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-button
+          expand="block"
+          type="submit"
+          [disabled]="!claseForm.valid"
+          class="pt-2"
+          >Guardar Clase</ion-button
+        >
+      </form>
+    </div>
+    <div class="col-sm-6">
+      <ion-list>
+        <ion-list-header>
+          <ion-label>Lista de Clases</ion-label>
+        </ion-list-header>
+        <ion-item *ngFor="let clase of clases">
+          <ion-label>
+            <h1>{{ clase.nombre }}</h1>
+            <h2></h2>
+            <h3>{{ clase.profesor.nombre }}, {{ clase.profesor.id }}</h3>
+            <p>ID: {{ clase.id }}</p>
+            <p>Hora de inicio: {{ clase.horaInicio }}</p>
+            <p>Hora de término: {{ clase.horaTermino }}</p>
+            <p>Diurno / Vespertino: {{ clase.diurnoVespertino }}</p>
+            <p>Dia(s): {{ clase.dias }}</p>
+          </ion-label>
+          <ion-button
+            color="danger"
+            slot="end"
+            (click)="eliminarClase(clase.id)"
+            >Eliminar</ion-button
+          >
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
 </ion-content>

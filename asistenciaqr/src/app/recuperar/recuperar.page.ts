@@ -63,11 +63,12 @@ export class RecuperarPage implements OnInit {
   //  }
   //}
 
+  //se crea nueva función para autenticar desde el storage
   async onSubmit() {
     if (this.recuperarForm.valid) {
-      const { email, password } = this.recuperarForm.value;
+      const { email } = this.recuperarForm.value;
       //llamamos a la función del servicio
-      const autenticado = await this.returnUser.autenticar(email, password);
+      const autenticado = await this.returnUser.emailAu(email);
       if (autenticado) {
         //se redirige según el termino del correo
         if (email.endsWith('@duocuc.cl')) {
@@ -77,12 +78,14 @@ export class RecuperarPage implements OnInit {
         }
       } else {
         this.showAlert(
+          //muestra alerta de error
           'Error',
           'Credenciales invalidas. Por favor, intente nuevamente.'
         );
       }
     } else {
       this.showAlert(
+        //muestra alerta de error
         'Error',
         'Por favor, complete todos los campos correctamente.'
       );

@@ -16,95 +16,25 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <!-- Modal QR Asistencia 1-->
-      <ion-modal [isOpen]="isQrOpen">
-        <ng-template>
-          <ion-header>
-            <ion-toolbar>
-              <ion-title>Modal</ion-title>
-              <ion-buttons slot="end">
-                <ion-button (click)="setQrOpen(false)" class="text-white">
-                  <ion-icon name="close-outline"></ion-icon>
-                </ion-button>
-              </ion-buttons>
-            </ion-toolbar>
-          </ion-header>
-          <ion-content class="ion-padding">
-            <div class="qrImage">
-              <div class="d-flex-center">
-                <div class="d-flex-center qr-wrapper">
-                  <qrcode
-                    [qrdata]="createdCode"
-                    [width]="200"
-                    [errorCorrectionLevel]="'M'"
-                  ></qrcode>
-                </div>
-              </div>
-            </div>
-          </ion-content>
-        </ng-template>
-      </ion-modal>
-      <!-- Fin Modal QR Asistencia 1-->
-      <!-- Accordion Clases -->
-      <div class="accordion accordion-flush border" id="accordionFlushExample">
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="flush-headingOne">
-            <button
-              class="accordion-button collapsed"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#flush-collapseOne"
-              aria-expanded="false"
-              aria-controls="flush-collapseOne"
-            >
-              Clase 1
-            </button>
-          </h2>
-          <div
-            id="flush-collapseOne"
-            class="accordion-collapse collapse"
-            aria-labelledby="flush-headingOne"
-            data-bs-parent="#accordionFlushExample"
-          >
-            <div class="accordion-body">
-              Placeholder content for this accordion, which is intended to
-              demonstrate the <code>.accordion-flush</code> class. This is the
-              first item's accordion body. <br />
-              <ion-button (click)="setQrOpen(true)" class="text-white"
-                >Generar QR</ion-button
-              >
-            </div>
-          </div>
-        </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="flush-headingTwo">
-            <button
-              class="accordion-button collapsed"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#flush-collapseTwo"
-              aria-expanded="false"
-              aria-controls="flush-collapseTwo"
-            >
-              Accordion Item #2
-            </button>
-          </h2>
-          <div
-            id="flush-collapseTwo"
-            class="accordion-collapse collapse"
-            aria-labelledby="flush-headingTwo"
-            data-bs-parent="#accordionFlushExample"
-          >
-            <div class="accordion-body">
-              Placeholder content for this accordion, which is intended to
-              demonstrate the <code>.accordion-flush</code> class. This is the
-              second item's accordion body. Let's imagine this being filled with
-              some actual content.
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Fin Accordion Clases-->
+      <!-- Relleno -->
+      <ion-list>
+        <ion-list-header>
+          <ion-label>Lista de Clases</ion-label>
+        </ion-list-header>
+        <ion-item *ngFor="let clase of clases">
+          <ion-label>
+            <h2>{{ clase.nombre }}</h2>
+            <h3>{{ clase.carreraClase }}</h3>
+            <p>
+              Profesor: {{ clase.profesor.nombre }} ({{ clase.profesor.id }})
+            </p>
+            <p>ID: {{ clase.id }}</p>
+            <p>Horario: {{ clase.horaInicio }} - {{ clase.horaTermino }}</p>
+            <p>Jornada: {{ clase.diurnoVespertino }}</p>
+            <p>Día(s): {{ clase.dias }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
     </ion-content>
   </div>
 </ion-content>

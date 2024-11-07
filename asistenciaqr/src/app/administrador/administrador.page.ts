@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StorageService } from '../storage.service';
 import { ToastController } from '@ionic/angular';
 
+//interface persona con atributos
 interface Persona {
   identificador: string;
   nombre: string;
@@ -11,6 +12,20 @@ interface Persona {
   email: string;
   contrasena: string;
 }
+//interface clase
+interface Clase {
+  id: string;
+  nombre: string;
+  carreraClase: string;
+  horaInicio: string;
+  horaTermino: string;
+  diurnoVespertino: string;
+  dias: string;
+  profesor: {
+    id: '';
+    nombre: '';
+  };
+}
 
 @Component({
   selector: 'app-administrador',
@@ -18,8 +33,12 @@ interface Persona {
   styleUrls: ['./administrador.page.scss'],
 })
 export class AdministradorPage implements OnInit {
-  personaForm: FormGroup;
+  //se crea usuario de administrador para poder administrar los usuarios, clases y asistencias.
+  personaForm: FormGroup; //formulario para agregar persona
+  claseForm: FormGroup; //formulario para agregar clase
   personas: Persona[] = [];
+  clases: Clase[] = [];
+  personaSeleccionada: Persona | null = null;
   carreras: string[] = [
     'Ingeniería Informatica',
     'Tecnico Informatico',
@@ -28,6 +47,8 @@ export class AdministradorPage implements OnInit {
     'Arquitectura',
     'Administración',
   ];
+  horario: string[] = ['Diurno', 'Vespertino'];
+  diaSemana: string[] = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,31 +62,39 @@ export class AdministradorPage implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       contrasena: ['', [Validators.required, Validators.minLength(8)]],
     });
+    this.claseForm = this.formBuilder.group({
+      nombre: ['', [Validators.required, Validators.minLength(2)]],
+      horaInicio: ['', Validators.required],
+      horaTermino: ['', Validators.required],
+      diurnoVespertino: ['', Validators.required],
+      dias: ['', Validators.required],
+      profesor: ['', Validators.required],
+    });
   }
 
   async ngOnInit() {
-    await this.storageService.init(); // Asegúrate de que `init` sea pública en el servicio si necesitas llamarla aquí
-    this.cargarPersonas();
+    await this.storageService.init(); //se llama al servicio publico
+    this.cargarPersonas(); //se cargan los datos en la pagina
+    this.cargarClases();
   }
 
   async cargarPersonas() {
     try {
-      const personas = await this.storageService.obtenerDatos('personas');
-      this.personas = personas || [];
-      console.log(this.personas); // Verifica que los datos se estén cargando
+      this.personas = await this.storageService.obtenerDatos('personas');
+      console.log(this.personas);
     } catch (error) {
       console.error('Error al cargar personas:', error);
       this.mostrarMensaje('Error al cargar las personas');
     }
   }
 
+  //función para guardar a una persona (debería de ser un alumno, pero preferimos hacerlo con personas)
   async guardarPersona() {
     if (this.personaForm.valid) {
       const persona: Persona = {
         identificador: this.personaForm.value.email,
         ...this.personaForm.value,
       };
-
       try {
         const resultado = await this.storageService.agregar(
           'personas',
@@ -87,6 +116,7 @@ export class AdministradorPage implements OnInit {
     }
   }
 
+  //metodo para cargar persona
   async obtenerPersona(email: string) {
     try {
       const persona = await this.storageService.obtenerDato('personas', email);
@@ -102,6 +132,7 @@ export class AdministradorPage implements OnInit {
     }
   }
 
+  //metodo para eliminar persona
   async eliminarPersona(email: string) {
     try {
       await this.storageService.eliminar('personas', email);
@@ -113,11 +144,54 @@ export class AdministradorPage implements OnInit {
     }
   }
 
+  //mensaje de alerta para ver si esta todo correcto
   async mostrarMensaje(mensaje: string) {
     const toast = await this.toastController.create({
       message: mensaje,
       duration: 2000,
     });
     toast.present();
+  }
+
+  //metodo para cargar las clases
+  async cargarClases() {
+    try {
+      const clases = await this.storageService.obtenerCalses();
+      this.clases = clases || [];
+      console.log(this.clases);
+    } catch (error) {
+      console.error('Error al cargar clases', error);
+      this.mostrarMensaje('Error al cargar las clases');
+    }
+  }
+
+  //funcion para guardar clase
+  async guardarClase() {
+    if (this.claseForm.valid) {
+      const clase = this.claseForm.value;
+      try {
+        const nuevaClase = await this.storageService.agregarClase(clase);
+        this.mostrarMensaje(`Clase guardada con éxito. ID: ${nuevaClase.id}`);
+        this.claseForm.reset();
+        this.cargarClases();
+      } catch (error) {
+        this.mostrarMensaje('Error al guardar la clase');
+        console.error(error);
+      }
+    } else {
+      this.mostrarMensaje('Por favor, complete todos los campos correctamente');
+    }
+  }
+
+  //funcion para eliminar clase
+  async eliminarClase(id: string) {
+    try {
+      await this.storageService.eliminarClase(id);
+      this.mostrarMensaje('Clase eliminada con éxito');
+      this.cargarClases();
+    } catch (error) {
+      this.mostrarMensaje('Error al eliminar la clase');
+      console.error(error);
+    }
   }
 }

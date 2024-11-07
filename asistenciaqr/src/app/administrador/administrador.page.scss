@@ -1,0 +1,15 @@
+.logo {
+  max-width: 150px;
+  margin: 0 auto;
+  display: block;
+}
+
+ion-header {
+  ion-toolbar {
+    --background: #003057;
+    --color: #ffffff;
+    .logo {
+      filter: brightness(0) invert(1);
+    }
+  }
+}
