@@ -1,5 +1,9 @@
 <ion-content [fullscreen]="true">
   <div class="crear-container">
+    <ion-button class="recuperar-button back-button" routerLink="/login">
+      <ion-icon name="chevron-back-outline" slot="start"></ion-icon>
+      Atrás
+    </ion-button>
     <div class="crear-box">
       <img
         src="../../assets/icon/LogoDuoc.webp"
@@ -8,33 +12,63 @@
       />
       <form [formGroup]="personaForm" (ngSubmit)="guardarPersona()">
         <ion-item>
-          <ion-input placeholder="Ingrese Nombre" formControlName="nombre" type="text" required>
+          <ion-input
+            placeholder="Ingrese Nombre"
+            formControlName="nombre"
+            type="text"
+            required
+          >
             <ion-icon name="pencil-outline" slot="start"></ion-icon>
           </ion-input>
         </ion-item>
         <ion-item>
-          <ion-input placeholder="Ingrese Apellido" formControlName="apellido" type="text" required>
+          <ion-input
+            placeholder="Ingrese Apellido"
+            formControlName="apellido"
+            type="text"
+            required
+          >
             <ion-icon name="pencil-outline" slot="start"></ion-icon>
           </ion-input>
         </ion-item>
         <ion-item>
-          <ion-select placeholder="Eliga Carrera" formControlName="carrera" required>
-            <ion-select-option *ngFor="let carrera of carreras" [value]="carrera">
+          <ion-select
+            placeholder="Eliga Carrera"
+            formControlName="carrera"
+            required
+          >
+            <ion-icon name="briefcase-outline" slot="start"></ion-icon>
+            <ion-select-option
+              *ngFor="let carrera of carreras"
+              [value]="carrera"
+            >
               {{carrera}}
             </ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item>
-          <ion-input placeholder="Ingrese Correo" formControlName="email" type="email" required>
-            <ion-icon name="at-outline" slot="start" id="hover-trigger"></ion-icon>
+          <ion-input
+            placeholder="Correo@duocuc.cl | correo@profesor.duoc.cl"
+            formControlName="email"
+            type="email"
+            required
+          >
+            <ion-icon name="at-outline" slot="start"></ion-icon>
           </ion-input>
         </ion-item>
-        <!-- Hover popover -->
-        <ion-popover trigger="hover-trigger" triggerAction="hover">
-          <ng-template>
-            <ion-content class="ion-padding">Hello World!</ion-content>
-          </ng-template>
-        </ion-popover>
+        <ion-item>
+          <ion-input
+            placeholder="contraseña"
+            formControlName="contrasena"
+            type="password"
+            required
+          >
+            <ion-icon name="lock-closed-outline" slot="start"></ion-icon
+          ></ion-input>
+        </ion-item>
+        <ion-button type="submit" [disabled]="!personaForm.valid">
+          Crear Cuenta
+        </ion-button>
       </form>
     </div>
   </div>

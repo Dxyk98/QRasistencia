@@ -3,20 +3,6 @@ import { StorageService } from '../storage.service';
 import { ToastController } from '@ionic/angular';
 import { UserService } from '../user.service';
 
-interface Clase {
-  id: string;
-  nombre: string;
-  carreraClase: string;
-  horaInicio: string;
-  horaTermino: string;
-  diurnoVespertino: string;
-  dias: string;
-  profesor: {
-    id: string;
-    nombre: string;
-  };
-}
-
 @Component({
   selector: 'app-profesor-home',
   templateUrl: './profesor-home.page.html',
@@ -28,7 +14,6 @@ export class ProfesorHomePage implements OnInit {
   qrData: string = '';
   createdCode: string = '';
   claseHoy: any; // Propiedad para almacenar la clase de hoy
-  isModalOpen = false;
   usuario: any; // Store user data here
   selectedProfesorId: string = ''; // Store the selected professor ID
 
@@ -65,6 +50,8 @@ export class ProfesorHomePage implements OnInit {
     }
   }
 
+  // Modal QR
+  isModalOpen = false;
   setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;
   }
@@ -86,4 +73,18 @@ export class ProfesorHomePage implements OnInit {
     });
     toast.present();
   }
+}
+
+interface Clase {
+  id: string;
+  nombre: string;
+  carreraClase: string;
+  horaInicio: string;
+  horaTermino: string;
+  diurnoVespertino: string;
+  dias: string;
+  profesor: {
+    id: string;
+    nombre: string;
+  };
 }

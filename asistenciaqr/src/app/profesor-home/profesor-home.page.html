@@ -9,6 +9,10 @@
             class="logo"
           />
         </ion-title>
+        <ion-button slot="end">
+          <ion-icon name="add-outline" slot="end"></ion-icon>
+          Crear Clase
+        </ion-button>
         <ion-button slot="end" routerLink="/login">
           logout
           <ion-icon name="log-out-outline"></ion-icon>
@@ -32,6 +36,7 @@
             <p>Día(s): {{ clase.dias }}</p>
             <ion-button (click)="setQData(clase)">Generar QR</ion-button>
           </ion-label>
+          <!-- Modal QR -->
           <ion-modal [isOpen]="isModalOpen">
             <ng-template>
               <ion-header>
@@ -57,6 +62,7 @@
               </ion-content>
             </ng-template>
           </ion-modal>
+          <!-- End Modal QR -->
         </ion-item>
       </ion-list>
     </ion-content>
