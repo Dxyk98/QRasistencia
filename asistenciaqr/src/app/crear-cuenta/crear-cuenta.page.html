@@ -6,7 +6,36 @@
         alt="DuocUC Logo"
         class="logo"
       />
-      <form></form>
+      <form [formGroup]="personaForm" (ngSubmit)="guardarPersona()">
+        <ion-item>
+          <ion-input placeholder="Ingrese Nombre" formControlName="nombre" type="text" required>
+            <ion-icon name="pencil-outline" slot="start"></ion-icon>
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input placeholder="Ingrese Apellido" formControlName="apellido" type="text" required>
+            <ion-icon name="pencil-outline" slot="start"></ion-icon>
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-select placeholder="Eliga Carrera" formControlName="carrera" required>
+            <ion-select-option *ngFor="let carrera of carreras" [value]="carrera">
+              {{carrera}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-input placeholder="Ingrese Correo" formControlName="email" type="email" required>
+            <ion-icon name="at-outline" slot="start" id="hover-trigger"></ion-icon>
+          </ion-input>
+        </ion-item>
+        <!-- Hover popover -->
+        <ion-popover trigger="hover-trigger" triggerAction="hover">
+          <ng-template>
+            <ion-content class="ion-padding">Hello World!</ion-content>
+          </ng-template>
+        </ion-popover>
+      </form>
     </div>
   </div>
 </ion-content>

@@ -71,7 +71,12 @@ export class CrearCuentaPage implements OnInit {
         } else {
           this.mostrarMensaje('Error la cuenta ya existe');
         }
-      } catch (error) {}
+      } catch (error) {
+        this.mostrarMensaje('Error al guardar la persona');
+        console.error(error);
+      }
+    }else{
+      this.mostrarMensaje('Por favoe, complete todos los campos correctamente');
     }
   }
 
