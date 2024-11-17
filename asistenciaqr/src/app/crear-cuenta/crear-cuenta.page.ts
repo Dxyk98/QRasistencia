@@ -19,6 +19,7 @@ export class CrearCuentaPage implements OnInit {
     'Arquitectura',
     'Administración',
   ];
+  tipo: string[] = ['Alunmo', 'Profesor'];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,6 +30,7 @@ export class CrearCuentaPage implements OnInit {
       nombre: ['', [Validators.required, Validators.minLength(3)]],
       apellido: ['', [Validators.required, Validators.minLength(3)]],
       carrera: ['', [Validators.required]],
+      tipoPersona: ['', [Validators.required]],
       email: [
         '',
         [
@@ -75,7 +77,7 @@ export class CrearCuentaPage implements OnInit {
         this.mostrarMensaje('Error al guardar la persona');
         console.error(error);
       }
-    }else{
+    } else {
       this.mostrarMensaje('Por favoe, complete todos los campos correctamente');
     }
   }
@@ -90,11 +92,13 @@ export class CrearCuentaPage implements OnInit {
   }
 }
 
+//interface persona
 interface Persona {
   identificador: string;
   nombre: string;
   apellido: string;
   carrera: string;
+  tipoPersona: string;
   email: string;
   contrasena: string;
 }

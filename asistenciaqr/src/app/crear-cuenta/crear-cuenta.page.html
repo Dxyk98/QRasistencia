@@ -47,6 +47,18 @@
           </ion-select>
         </ion-item>
         <ion-item>
+          <ion-select
+            placeholder="Eliga profesion"
+            formControlName="tipoPersona"
+            required
+          >
+            <ion-icon name="people-outline" slot="start"></ion-icon>
+            <ion-select-option *ngFor="let tipe of tipo" [value]="tipe">
+              {{tipe}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
           <ion-input
             placeholder="Correo@duocuc.cl | correo@profesor.duoc.cl"
             formControlName="email"

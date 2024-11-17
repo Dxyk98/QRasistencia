@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NumberValueAccessor } from '@angular/forms';
 import { Storage } from '@ionic/storage-angular';
-import { afterWrite } from '@popperjs/core';
 
 @Injectable({
   providedIn: 'root',
@@ -151,6 +149,7 @@ interface Persona {
   nombre: string;
   apellido: string;
   carrera: string;
+  tipoPersona: string;
   email: string;
   contrasena: string;
 }

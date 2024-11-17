@@ -9,6 +9,7 @@ interface Persona {
   nombre: string;
   apellido: string;
   carrera: string;
+  tipoPersona: string;
   email: string;
   contrasena: string;
 }
