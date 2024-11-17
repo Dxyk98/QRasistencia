@@ -42,7 +42,8 @@ export class CrearClasePage implements OnInit {
 
   async ngOnInit() {
     await this.storage.init();
-    this.cargarClases();
+    this.cargarClases(); //se cargan los datos de las clases
+    this.cargarPersonas(); //se cargan los datos de las personas
   }
 
   async cargarClases() {
@@ -91,6 +92,16 @@ export class CrearClasePage implements OnInit {
     } catch (error) {
       this.mostrarMensaje('Error al eliminar la clase');
       console.error(error);
+    }
+  }
+
+  async cargarPersonas() {
+    try {
+      this.personas = await this.storage.obtenerDatos('personas');
+      console.log(this.personas);
+    } catch (error) {
+      console.error('Error al cargar personas', error);
+      this.mostrarMensaje('Error al cargar personas');
     }
   }
 }
