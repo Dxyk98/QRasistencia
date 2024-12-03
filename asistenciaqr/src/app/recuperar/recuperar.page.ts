@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-recuperar',
@@ -15,8 +14,7 @@ export class RecuperarPage implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private alertController: AlertController,
-    private returnUser: UserService
+    private alertController: AlertController
   ) {
     this.initForm();
   }
@@ -65,31 +63,31 @@ export class RecuperarPage implements OnInit {
 
   //se crea nueva función para autenticar desde el storage
   async onSubmit() {
-    if (this.recuperarForm.valid) {
-      const { email } = this.recuperarForm.value;
-      //llamamos a la función del servicio
-      const autenticado = await this.returnUser.emailAu(email);
-      if (autenticado) {
-        //se redirige según el termino del correo
-        if (email.endsWith('@duocuc.cl')) {
-          this.router.navigate(['/student/home-student']);
-        } else if (email.endsWith('@profesor.duoc.cl')) {
-          this.router.navigate(['/profesor-home']);
-        }
-      } else {
-        this.showAlert(
-          //muestra alerta de error
-          'Error',
-          'Credenciales invalidas. Por favor, intente nuevamente.'
-        );
-      }
-    } else {
-      this.showAlert(
-        //muestra alerta de error
-        'Error',
-        'Por favor, complete todos los campos correctamente.'
-      );
-    }
+    //if (this.recuperarForm.valid) {
+    //  const { email } = this.recuperarForm.value;
+    //  //llamamos a la función del servicio
+    //  const autenticado = await this.returnUser.emailAu(email);
+    //  if (autenticado) {
+    //    //se redirige según el termino del correo
+    //    if (email.endsWith('@duocuc.cl')) {
+    //      this.router.navigate(['/student/home-student']);
+    //    } else if (email.endsWith('@profesor.duoc.cl')) {
+    //      this.router.navigate(['/profesor-home']);
+    //    }
+    //  } else {
+    //    this.showAlert(
+    //      //muestra alerta de error
+    //      'Error',
+    //      'Credenciales invalidas. Por favor, intente nuevamente.'
+    //    );
+    //  }
+    //} else {
+    //  this.showAlert(
+    //    //muestra alerta de error
+    //    'Error',
+    //    'Por favor, complete todos los campos correctamente.'
+    //  );
+    //}
   }
 
   //showalert: función para mostrar la alerta emergente

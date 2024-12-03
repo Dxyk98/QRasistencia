@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { StorageService } from '../storage.service';
 import { ToastController } from '@ionic/angular';
 
 @Component({
@@ -8,17 +7,13 @@ import { ToastController } from '@ionic/angular';
   styleUrls: ['./calendario.page.scss'],
 })
 export class CalendarioPage implements OnInit {
-  constructor(
-    private storage: StorageService,
-    private toastController: ToastController
-  ) {}
+  constructor(private toastController: ToastController) {}
   asistencia: Asistencia[] = [];
 
   async ngOnInit() {
-    await this.storage.init(); //se llama al servicio publico
+    //se llama al servicio publico
     this.checkIfMobile();
     window.addEventListener('resize', () => this.checkIfMobile());
-    this.cargarAsistencia();
   }
 
   isMobile: boolean = true;
@@ -33,17 +28,6 @@ export class CalendarioPage implements OnInit {
       duration: 2000,
     });
     toast.present();
-  }
-
-  async cargarAsistencia() {
-    try {
-      const asistencia = await this.storage.obtenerAsistencias();
-      this.asistencia = asistencia || [];
-      console.log(this.asistencia);
-    } catch (error) {
-      console.error('Error al cargar clases', error);
-      this.mostrarMensaje('Error al cargar las clases');
-    }
   }
 }
 

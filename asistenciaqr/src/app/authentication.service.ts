@@ -41,7 +41,7 @@ export class AuthenticationService {
         throw new Error('No se pudo obtener el UID del usuario.');
       }
     } catch (error) {
-      console.error('Error al registrar el usuario:');
+      console.error(error);
       throw error;
     }
   }

@@ -36,7 +36,7 @@
             <div class="row mt-2">
               <div class="col-sm-6">
                 <h2>Formulario de clases</h2>
-                <form [formGroup]="claseForm" (ngSubmit)="guardarClase()">
+                <form [formGroup]="claseForm">
                   <ion-item class="pt-2">
                     <ion-input
                       label="Nombre de la clase"
@@ -154,12 +154,6 @@
                       <p>Dia(s): {{ clase.dias }}</p>
                       <p>Carrera: {{ clase.carreraClase }}</p>
                     </ion-label>
-                    <ion-button
-                      color="danger"
-                      slot="end"
-                      (click)="eliminarClase(clase.id)"
-                      >Eliminar</ion-button
-                    >
                   </ion-item>
                 </ion-list>
               </div>

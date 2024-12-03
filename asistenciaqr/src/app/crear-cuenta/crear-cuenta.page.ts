@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { StorageService } from '../storage.service';
 import { ToastController } from '@ionic/angular';
+import { AuthenticationService } from '../authentication.service';
+import { StoreService } from '../store.service';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-crear-cuenta',
@@ -10,7 +12,6 @@ import { ToastController } from '@ionic/angular';
 })
 export class CrearCuentaPage implements OnInit {
   personaForm: FormGroup;
-  personas: Persona[] = [];
   carreras: string[] = [
     'Ingeniería Informatica',
     'Tecnico Informatico',
@@ -19,12 +20,14 @@ export class CrearCuentaPage implements OnInit {
     'Arquitectura',
     'Administración',
   ];
-  tipo: string[] = ['Alunmo', 'Profesor'];
+  tipo: string[] = ['Alumno', 'Profesor'];
 
   constructor(
     private formBuilder: FormBuilder,
-    private storage: StorageService,
-    private toast: ToastController
+    private toast: ToastController,
+    private auth: AuthenticationService,
+    private store: StoreService,
+    private route: Router
   ) {
     this.personaForm = this.formBuilder.group({
       nombre: ['', [Validators.required, Validators.minLength(3)]],
@@ -44,41 +47,27 @@ export class CrearCuentaPage implements OnInit {
     });
   }
 
-  async ngOnInit() {
-    await this.storage.init();
-  }
-
-  async cargarPersonas() {
-    try {
-      this.personas = await this.storage.obtenerDatos('personas');
-      console.log(this.personas);
-    } catch (error) {
-      console.error('Error al cargar personas', error);
-      this.mostrarMensaje('Error al cargar las personas');
-    }
-  }
+  ngOnInit() {}
 
   async guardarPersona() {
     if (this.personaForm.valid) {
-      const persona: Persona = {
-        identificador: this.personaForm.value.email,
-        ...this.personaForm.value,
-      };
+      const { email, contrasena, ...additionalData } = this.personaForm.value;
+
       try {
-        const result = await this.storage.agregar('personas', persona);
-        if (result) {
-          this.mostrarMensaje('Cuenta Creada con éxito');
-          this.personaForm.reset();
-          this.cargarPersonas();
-        } else {
-          this.mostrarMensaje('Error la cuenta ya existe');
-        }
+        // Paso 1: Registrar al usuario en Firebase Authentication
+        const uid = await this.auth.register(email, contrasena);
+        // Paso 2: Guardar los datos adicionales en Firestore
+        await this.store.saveUserData(uid, additionalData);
+        // Mostrar mensaje de éxito
+        this.mostrarMensaje('Cuenta creada exitosamente.');
+        setTimeout(() => {
+          this.route.navigate(['/']); // Ruta raíz
+        }, 5000);
       } catch (error) {
-        this.mostrarMensaje('Error al guardar la persona');
-        console.error(error);
+        this.mostrarMensaje('Error');
       }
     } else {
-      this.mostrarMensaje('Por favoe, complete todos los campos correctamente');
+      this.mostrarMensaje('Por favor complete todos los campos correctamente.');
     }
   }
 
@@ -90,15 +79,4 @@ export class CrearCuentaPage implements OnInit {
     });
     toast.present();
   }
-}
-
-//interface persona
-interface Persona {
-  identificador: string;
-  nombre: string;
-  apellido: string;
-  carrera: string;
-  tipoPersona: string;
-  email: string;
-  contrasena: string;
 }

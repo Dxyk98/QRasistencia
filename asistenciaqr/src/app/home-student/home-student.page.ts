@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Html5QrcodeScanner, Html5QrcodeScanType } from 'html5-qrcode';
-import { UserService } from '../user.service';
-import { StorageService } from '../storage.service';
 import { ToastController } from '@ionic/angular';
 
 @Component({
@@ -17,19 +15,12 @@ export class HomeStudentPage implements OnInit {
   clases: Clase[] = [];
   asistencia: Asistencia[] = [];
 
-  constructor(
-    private userService: UserService,
-    private storageService: StorageService,
-    private toastController: ToastController
-  ) {}
+  constructor(private toastController: ToastController) {}
 
   //se determinan las pantallas
   async ngOnInit() {
-    await this.storageService.init(); //se llama al servicio publico
     this.checkIfMobile();
     window.addEventListener('resize', () => this.checkIfMobile());
-    this.usuario = this.userService.obtenerUsuario();
-    this.cargarClases();
   }
 
   isMobile: boolean = true;
@@ -90,10 +81,10 @@ export class HomeStudentPage implements OnInit {
           horaAsistencia: new Date().toISOString(), // Hora actual en formato ISO
         };
 
-        const asistenciaGuardada = await this.storageService.agregarAsistencia(
-          nuevaAsistencia
-        );
-        console.log('Asistencia guardada:', asistenciaGuardada); // Verifica que se haya guardado correctamente
+        //const asistenciaGuardada = await this.storageService.agregarAsistencia(
+        //  nuevaAsistencia
+        //);
+        //console.log('Asistencia guardada:', asistenciaGuardada); // Verifica que se haya guardado correctamente
 
         // Muestra un mensaje de éxito
         this.mostrarMensaje('Asistencia guardada exitosamente');
@@ -109,18 +100,6 @@ export class HomeStudentPage implements OnInit {
   ngOnDestroy() {
     if (this.html5QrCode) {
       this.html5QrCode.clear(); //debería limpiar cualquier recurso usado por el escaner.
-    }
-  }
-
-  //metodo para cargar las clases
-  async cargarClases() {
-    try {
-      const clases = await this.storageService.obtenerClases();
-      this.clases = clases || [];
-      console.log(this.clases);
-    } catch (error) {
-      console.error('Error al cargar clases', error);
-      this.mostrarMensaje('Error al cargar las clases');
     }
   }
 

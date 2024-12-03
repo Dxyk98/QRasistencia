@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { StorageService } from '../storage.service';
 import { ToastController } from '@ionic/angular';
-import { UserService } from '../user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -32,9 +30,7 @@ export class ProfesorHomePage implements OnInit {
   diaSemana: string[] = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
 
   constructor(
-    private storageService: StorageService,
     private toastController: ToastController,
-    private userService: UserService,
     private formBuilder: FormBuilder
   ) {
     this.claseForm = this.formBuilder.group({
@@ -49,12 +45,8 @@ export class ProfesorHomePage implements OnInit {
   }
 
   async ngOnInit() {
-    await this.storageService.init(); //se llama al servicio publico
     this.checkIfMobile();
     window.addEventListener('resize', () => this.checkIfMobile());
-    this.cargarClases();
-    this.cargarPersonas();
-    this.usuario = await this.userService.obtenerUsuario(); // Fetch logged-in user
     this.selectedProfesorId = this.usuario.id; // Assign the professor's ID
   }
 
@@ -86,55 +78,6 @@ export class ProfesorHomePage implements OnInit {
   isModalOpen = false;
   setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;
-  }
-
-  async cargarClases() {
-    try {
-      this.clases = await this.storageService.obtenerClases();
-      console.log('Clases cargadas:', this.clases);
-    } catch (error) {
-      console.error('Error al cargar clases:', error);
-      await this.mostrarMensaje('Error al cargar las clases');
-    }
-  }
-
-  async guardarClase() {
-    if (this.claseForm.valid) {
-      const clase = this.claseForm.value;
-      try {
-        const nuevaClase = await this.storageService.agregarClase(clase);
-        this.mostrarMensaje(`Clase guardada con éxito. ID: ${nuevaClase.id}`);
-        this.claseForm.reset();
-        this.cargarClases();
-      } catch (error) {
-        this.mostrarMensaje('Error al guardar la clase');
-        console.error(error);
-      }
-    } else {
-      this.mostrarMensaje('Por favor, complete todos los campos correctamente');
-    }
-  }
-
-  //funcion para eliminar clase
-  async eliminarClase(id: string) {
-    try {
-      await this.storageService.eliminarClase(id);
-      this.mostrarMensaje('Clase eliminada con éxito');
-      this.cargarClases();
-    } catch (error) {
-      this.mostrarMensaje('Error al eliminar la clase');
-      console.error(error);
-    }
-  }
-
-  async cargarPersonas() {
-    try {
-      this.personas = await this.storageService.obtenerDatos('personas');
-      console.log(this.personas);
-    } catch (error) {
-      console.error('Error al cargar personas', error);
-      this.mostrarMensaje('Error al cargar personas');
-    }
   }
 
   async mostrarMensaje(mensaje: string) {
