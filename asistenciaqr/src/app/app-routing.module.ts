@@ -47,19 +47,21 @@ const routes: Routes = [
     path: 'horario',
     loadChildren: () =>
       import('./horario/horario.module').then((m) => m.HorarioPageModule),
-  },  {
+  },
+  {
     path: 'administrador',
-    loadChildren: () => import('./administrador/administrador.module').then( m => m.AdministradorPageModule)
+    loadChildren: () =>
+      import('./administrador/administrador.module').then(
+        (m) => m.AdministradorPageModule
+      ),
   },
   {
     path: 'crear-cuenta',
-    loadChildren: () => import('./crear-cuenta/crear-cuenta.module').then( m => m.CrearCuentaPageModule)
+    loadChildren: () =>
+      import('./crear-cuenta/crear-cuenta.module').then(
+        (m) => m.CrearCuentaPageModule
+      ),
   },
-  {
-    path: 'crear-clase',
-    loadChildren: () => import('./crear-clase/crear-clase.module').then( m => m.CrearClasePageModule)
-  },
-
 ];
 
 @NgModule({

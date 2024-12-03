@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { UserService } from '../user.service';
+import { CloudService } from '../cloud.service';
 
 @Component({
   selector: 'app-login',
@@ -19,12 +20,15 @@ export class LoginPage implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private alertController: AlertController,
-    private returnUser: UserService
+    private returnUser: UserService,
+    private cloud: CloudService
   ) {
     this.initForm();
   }
 
-  ngOnInit() {}
+  async ngOnInit() {
+    this.cloud.verifyConnection();
+  }
 
   //patrones de validación
   private initForm(): void {

@@ -68,3 +68,7 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+#cloudService
+cloud.service.ts
+cloud.service.spec.ts
