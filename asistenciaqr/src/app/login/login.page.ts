@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { UserService } from '../user.service';
-import { CloudService } from '../cloud.service';
+import { AuthenticationService } from '../authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -12,23 +16,17 @@ import { CloudService } from '../cloud.service';
 })
 export class LoginPage implements OnInit {
   loginForm!: FormGroup;
-  //Si ve este mensaje profesor, es para informarle que el registro a la aplicación se hace a traves de /administrador
-  //Se crea un usuario @profesor.duoc.cl y así poder ingresar, también así en la parte del alumno, que es @duocuc.cl
-  //Saludos!!
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private alertController: AlertController,
-    private returnUser: UserService,
-    private cloud: CloudService
+    private authService: AuthenticationService
   ) {
     this.initForm();
   }
 
-  async ngOnInit() {
-    this.cloud.verifyConnection();
-  }
+  ngOnInit() {}
 
   //patrones de validación
   private initForm(): void {
@@ -46,55 +44,38 @@ export class LoginPage implements OnInit {
     });
   }
 
-  //onsubmit: al colocar los valores necesarios, validara que este todo bien y redireccionara donde se debe.
-  //onLogin() {
-  //  if (this.loginForm.valid) {
-  //    const { email, password } = this.loginForm.value;
-  //    if (this.returnUser.validarServicio(email, password)) {
-  //      if (email.endsWith('@duocuc.cl')) {
-  //        this.router.navigate(['/student/home-student']);
-  //      } else if (email.endsWith('@profesor.duoc.cl')) {
-  //        this.router.navigate(['/profesor-home']);
-  //      }
-  //    } else {
-  //      this.showAlert(
-  //        'Error',
-  //        'Credenciales inválidas. Por favor, intente nuevamente.'
-  //      );
-  //    }
-  //  } else {
-  //    this.showAlert(
-  //      'Error',
-  //      'Por favor, complete todos los campos correctamente.'
-  //    );
-  //  }
-  //}
-
   //se crea nueva función para autenticar desde el storage
   async onLogin() {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
-      //llamamos a la función del servicio
-      const autenticado = await this.returnUser.autenticar(email, password);
-      if (autenticado) {
-        //se redirige según el termino del correo tanto estudiante, profesor y administrador
-        if (email.endsWith('@duocuc.cl')) {
-          this.router.navigate(['/student/home-student']);
-        } else if (email.endsWith('@profesor.duoc.cl')) {
-          this.router.navigate(['/profesor-home']);
-        } else if (email.endsWith('@administrador.cl')) {
-          this.router.navigate(['/administrador']); //autenticación de administrador no es funcional
+
+      try {
+        // Llamamos al servicio para autenticar
+        const autenticado = await this.authService.autenticar(email, password);
+
+        if (autenticado) {
+          // Redirigir según el dominio del correo
+          if (email.endsWith('@duocuc.cl')) {
+            this.router.navigate(['/student/home-student']);
+          } else if (email.endsWith('@profesor.duoc.cl')) {
+            this.router.navigate(['/profesor-home']);
+          } else if (email.endsWith('@administrador.cl')) {
+            this.router.navigate(['/administrador']);
+          }
+        } else {
+          // Mostrar alerta de credenciales inválidas
+          this.showAlert(
+            'Error',
+            'Credenciales inválidas. Por favor, intente nuevamente.'
+          );
         }
-      } else {
-        this.showAlert(
-          //muestra alerta de error
-          'Error',
-          'Credenciales invalidas. Por favor, intente nuevamente.'
-        );
+      } catch (err) {
+        // Mostrar alerta de error (por ejemplo, dominio no permitido)
+        this.showAlert('Error', 'Error');
       }
     } else {
+      // Mostrar alerta de formulario incompleto
       this.showAlert(
-        //muestra alerta de error
         'Error',
         'Por favor, complete todos los campos correctamente.'
       );
