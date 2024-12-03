@@ -62,9 +62,9 @@ export class CrearCuentaPage implements OnInit {
         this.mostrarMensaje('Cuenta creada exitosamente.');
         setTimeout(() => {
           this.route.navigate(['/']); // Ruta raíz
-        }, 5000);
+        }, 2000);
       } catch (error) {
-        this.mostrarMensaje('Error');
+        console.log(error);
       }
     } else {
       this.mostrarMensaje('Por favor complete todos los campos correctamente.');

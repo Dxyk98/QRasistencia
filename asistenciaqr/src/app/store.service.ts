@@ -16,4 +16,8 @@ export class StoreService {
       throw error;
     }
   }
+
+  getUserData(uid: string) {
+    return this.firestore.collection('Users').doc(uid).valueChanges();
+  }
 }

@@ -46,10 +46,14 @@ export class AuthenticationService {
     }
   }
 
+  getCurrentUser() {
+    return this.afAuth.authState;
+  }
+
   logout() {
     return this.afAuth.signOut().then(() => {
       console.log('Sesión cerrada');
-      this.router.navigate(['/login']); // Redirigir al login
+      this.router.navigate(['/']); // Redirigir al login
     });
   }
 }

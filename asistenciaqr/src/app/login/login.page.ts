@@ -52,11 +52,15 @@ export class LoginPage implements OnInit {
           // Redirigir según el dominio del correo
           if (email.endsWith('@duocuc.cl')) {
             this.router.navigate(['/student/home-student']);
+            this.loginForm.reset();
           } else if (email.endsWith('@profesor.duoc.cl')) {
             this.router.navigate(['/profesor-home']);
+            this.loginForm.reset();
           } else if (email.endsWith('@administrador.cl')) {
             this.router.navigate(['/administrador']);
+            this.loginForm.reset();
           }
+          this.loginForm.reset();
         } else {
           // Mostrar alerta de credenciales inválidas
           this.showAlert(

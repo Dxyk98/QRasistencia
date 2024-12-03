@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Html5QrcodeScanner, Html5QrcodeScanType } from 'html5-qrcode';
 import { ToastController } from '@ionic/angular';
+import { AuthenticationService } from '../authentication.service';
+import { StoreService } from '../store.service';
 
 @Component({
   selector: 'app-home-student',
@@ -11,16 +13,27 @@ export class HomeStudentPage implements OnInit {
   private html5QrCode: Html5QrcodeScanner | null = null;
   scannerResult: string | null = null; //string de escaner de QR
   isCameraPermission: boolean = false;
-  usuario: { nombre: string; carrera: string } = { nombre: '', carrera: '' };
-  clases: Clase[] = [];
-  asistencia: Asistencia[] = [];
+  usuario: any = { nombre: '' };
 
-  constructor(private toastController: ToastController) {}
+  constructor(
+    private toastController: ToastController,
+    private auth: AuthenticationService,
+    private store: StoreService
+  ) {}
 
   //se determinan las pantallas
   async ngOnInit() {
     this.checkIfMobile();
     window.addEventListener('resize', () => this.checkIfMobile());
+    this.auth.getCurrentUser().subscribe((user) => {
+      if (user) {
+        this.store.getUserData(user.uid).subscribe((userData: any) => {
+          this.usuario.nombre = userData?.nombre || 'Usuario'; // Asigna el nombre o un valor por defecto
+        });
+      } else {
+        this.usuario.nombre = 'Invitado';
+      }
+    });
   }
 
   isMobile: boolean = true;
@@ -74,12 +87,12 @@ export class HomeStudentPage implements OnInit {
         this.scannerResult = result;
         console.log('resultado del scanner', result); //callback de exito, al escanear el código QR exitosamente
 
-        const nuevaAsistencia: Asistencia = {
-          idAsistencia: '', // Este campo se llenará en el servicio al generar el ID
-          idClase: result, // Asume que el resultado del QR es el ID de la clase
-          nombreUsuario: this.usuario.nombre, // Asigna el nombre del usuario actual
-          horaAsistencia: new Date().toISOString(), // Hora actual en formato ISO
-        };
+        //const nuevaAsistencia: Asistencia = {
+        //  idAsistencia: '', // Este campo se llenará en el servicio al generar el ID
+        //  idClase: result, // Asume que el resultado del QR es el ID de la clase
+        //  nombreUsuario: this.usuario.nombre, // Asigna el nombre del usuario actual
+        //  horaAsistencia: new Date().toISOString(), // Hora actual en formato ISO
+        //};
 
         //const asistenciaGuardada = await this.storageService.agregarAsistencia(
         //  nuevaAsistencia
