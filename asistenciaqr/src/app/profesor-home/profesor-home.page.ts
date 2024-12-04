@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthenticationService } from '../authentication.service';
+import { StoreService } from '../store.service';
 
 @Component({
   selector: 'app-profesor-home',
@@ -9,15 +11,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ProfesorHomePage implements OnInit {
   isMobile: boolean = false;
-  clases: Clase[] = [];
   qrData: string = '';
   createdCode: string = '';
   claseHoy: any; // Propiedad para almacenar la clase de hoy
-  usuario: any; // Store user data here
-  selectedProfesorId: string = ''; // Store the selected professor ID
+  usuario: any = { nombre: '' };
+  selectedProfesorId: any[] = []; // Store the selected professor ID
   claseForm: FormGroup;
-  personaSeleccionada: Persona | null = null;
-  personas: Persona[] = [];
   carreras: string[] = [
     'Ingeniería Informatica',
     'Tecnico Informatico',
@@ -31,7 +30,9 @@ export class ProfesorHomePage implements OnInit {
 
   constructor(
     private toastController: ToastController,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private auth: AuthenticationService,
+    private store: StoreService
   ) {
     this.claseForm = this.formBuilder.group({
       nombre: ['', [Validators.required, Validators.minLength(2)]],
@@ -48,17 +49,26 @@ export class ProfesorHomePage implements OnInit {
     this.checkIfMobile();
     window.addEventListener('resize', () => this.checkIfMobile());
     this.selectedProfesorId = this.usuario.id; // Assign the professor's ID
+    this.auth.getCurrentUser().subscribe((user) => {
+      if (user) {
+        this.store.getUserData(user.uid).subscribe((userData: any) => {
+          this.usuario.nombre = userData?.nombre || 'Usuario'; // Asigna el nombre o un valor por defecto
+        });
+      } else {
+        this.usuario.nombre = 'Invitado';
+      }
+    });
   }
 
   private checkIfMobile() {
     this.isMobile = window.innerWidth < 768;
   }
 
-  setQData(clase: Clase) {
-    this.qrData = clase.id; // Set the selected class's ID as QR data
-    this.generateQrCode(); // Generate the QR code based on the selected class's ID
-    this.setOpen(true); // Open the modal
-  }
+  //setQrData(clase: Clase) {
+  //  this.qrData = clase.id; // Set the selected class's ID as QR data
+  //  this.generateQrCode(); // Generate the QR code based on the selected class's ID
+  //  this.setOpen(true); // Open the modal
+  //}
 
   generateQrCode() {
     if (this.qrData) {
@@ -80,6 +90,18 @@ export class ProfesorHomePage implements OnInit {
     this.isModalOpen = isOpen;
   }
 
+  loadProfesores() {
+    this.store.getProfesores().subscribe(
+      (data) => {
+        this.selectedProfesorId = data;
+        console.log('Profesores cargados:', this.selectedProfesorId);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+
   async mostrarMensaje(mensaje: string) {
     const toast = await this.toastController.create({
       message: mensaje,
@@ -87,29 +109,4 @@ export class ProfesorHomePage implements OnInit {
     });
     toast.present();
   }
-}
-
-interface Clase {
-  id: string;
-  nombre: string;
-  carreraClase: string;
-  horaInicio: string;
-  horaTermino: string;
-  diurnoVespertino: string;
-  dias: string;
-  profesor: {
-    id: string;
-    nombre: string;
-  };
-}
-
-//interface persona
-interface Persona {
-  identificador: string;
-  nombre: string;
-  apellido: string;
-  carrera: string;
-  tipoPersona: string;
-  email: string;
-  contrasena: string;
 }
