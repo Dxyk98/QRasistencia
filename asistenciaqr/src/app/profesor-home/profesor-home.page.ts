@@ -14,7 +14,6 @@ export class ProfesorHomePage implements OnInit {
   qrData: string = '';
   createdCode: string = '';
   claseHoy: any; // Propiedad para almacenar la clase de hoy
-  profesores: any[] = [];
   claseForm: FormGroup;
   carreras: string[] = [
     'Ingeniería Informatica',
@@ -26,7 +25,9 @@ export class ProfesorHomePage implements OnInit {
   ];
   horario: string[] = ['Diurno', 'Vespertino'];
   diaSemana: string[] = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
-  usuario: any = { nombre: '' };
+  usuario: any = { nombre: '' }; //variable para almacenar nombre de usuario
+  profesores: any[] = []; //variable para almacenar a profesores.
+  clases: any[] = []; //variable para almacenar las clases
 
   constructor(
     private toastController: ToastController,
@@ -49,6 +50,7 @@ export class ProfesorHomePage implements OnInit {
     this.checkIfMobile();
     window.addEventListener('resize', () => this.checkIfMobile());
     this.loadProfesores();
+    this.loadClasses();
     this.auth.getCurrentUser().subscribe((user) => {
       if (user) {
         this.store.getUserData(user.uid).subscribe((userData: any) => {
@@ -117,6 +119,18 @@ export class ProfesorHomePage implements OnInit {
     } else {
       this.mostrarMensaje('Por favor complete todos los campos correctamente.');
     }
+  }
+
+  loadClasses() {
+    this.store.getAllClasses().subscribe(
+      (data) => {
+        this.clases = data;
+        console.log('Clases cargadas:', this.clases);
+      },
+      (error) => {
+        console.error('Error al cargar las clases:', error);
+      }
+    );
   }
 
   async mostrarMensaje(mensaje: string) {

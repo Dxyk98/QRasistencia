@@ -21,6 +21,7 @@ export class CrearCuentaPage implements OnInit {
     'Administración',
   ];
   tipo: string[] = ['Alumno', 'Profesor'];
+  horario: string[] = ['Diurno', 'Vespertino'];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,6 +34,7 @@ export class CrearCuentaPage implements OnInit {
       nombre: ['', [Validators.required, Validators.minLength(3)]],
       apellido: ['', [Validators.required, Validators.minLength(3)]],
       carrera: ['', [Validators.required]],
+      horario: ['', [Validators.required]],
       tipoPersona: ['', [Validators.required]],
       email: [
         '',

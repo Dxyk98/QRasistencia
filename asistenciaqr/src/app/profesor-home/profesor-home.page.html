@@ -137,26 +137,19 @@
               <div class="col-sm-6">
                 <h2>Clases Registradas</h2>
                 <ion-list>
-                  <ion-list-header>
-                    <ion-label>Lista de Clases</ion-label>
-                  </ion-list-header>
-                  <!--
                   <ion-item *ngFor="let clase of clases">
                     <ion-label>
                       <h1>{{ clase.nombre }}</h1>
-                      <h2></h2>
-                      <h3>
-                        {{ clase.profesor.nombre }}, {{ clase.profesor.id }}
-                      </h3>
-                      <p>ID: {{ clase.id }}</p>
-                      <p>Hora de inicio: {{ clase.horaInicio }}</p>
-                      <p>Hora de término: {{ clase.horaTermino }}</p>
-                      <p>Diurno / Vespertino: {{ clase.diurnoVespertino }}</p>
-                      <p>Dia(s): {{ clase.dias }}</p>
-                      <p>Carrera: {{ clase.carreraClase }}</p>
+                      <h2>Carrera: {{ clase.carreraClase }}</h2>
+                      <p>
+                        Horario: {{ clase.horaInicio }} - {{ clase.horaTermino
+                        }}
+                      </p>
+                      <p>Jornada: {{ clase.diurnoVespertino }}</p>
+                      <p>Días: {{ clase.dias?.join(', ') }}</p>
+                      <p>Profesor: {{ clase.profesor }}</p>
                     </ion-label>
                   </ion-item>
-                  -->
                 </ion-list>
               </div>
             </div>
@@ -171,16 +164,15 @@
           <ion-label>Lista de Clases</ion-label>
         </ion-list-header>
         <p>Bienvenido, {{usuario.nombre}}</p>
-        <!--
         <ion-item *ngFor="let clase of clases">
           <ion-label>
             <h2>{{ clase.nombre }}</h2>
             <h3>{{ clase.carreraClase }}</h3>
-            <p>Profesor: {{clase.profesor.nombre}}</p>
+            <p>Profesor: {{clase.profesor}}</p>
             <p>Horario: {{ clase.horaInicio }} - {{ clase.horaTermino }}</p>
             <p>Jornada: {{ clase.diurnoVespertino }}</p>
             <p>Día(s): {{ clase.dias }}</p>
-            <ion-button (click)="setQData(clase)">Generar QR</ion-button>
+            <!--<ion-button (click)="setQrData(clase)">Generar QR</ion-button>-->
           </ion-label>
           <ion-modal [isOpen]="isModalOpen">
             <ng-template class="d-flex-center">
@@ -208,7 +200,6 @@
             </ng-template>
           </ion-modal>
         </ion-item>
-        -->
       </ion-list>
     </ion-content>
   </div>

@@ -48,6 +48,18 @@
         </ion-item>
         <ion-item>
           <ion-select
+            placeholder="Seleccione horario"
+            formControlName="horario"
+            required
+          >
+            <ion-icon name="time-outline" slot="start"></ion-icon>
+            <ion-select-option *ngFor="let hora of horario" [value]="hora">
+              {{ hora }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-select
             placeholder="Eliga profesion"
             formControlName="tipoPersona"
             required

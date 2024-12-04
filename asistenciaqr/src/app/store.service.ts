@@ -36,7 +36,11 @@ export class StoreService {
   }
 
   getClassData(uid: string) {
-    return this.firestore.collection('Class').doc(uid).valueChanges();
+    return this.firestore.collection('Clasees').doc(uid).valueChanges();
+  }
+
+  getAllClasses() {
+    return this.firestore.collectionGroup('Clasees').valueChanges();
   }
 
   getProfesores() {
