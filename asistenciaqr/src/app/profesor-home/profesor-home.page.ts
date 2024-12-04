@@ -14,8 +14,7 @@ export class ProfesorHomePage implements OnInit {
   qrData: string = '';
   createdCode: string = '';
   claseHoy: any; // Propiedad para almacenar la clase de hoy
-  usuario: any = { nombre: '' };
-  selectedProfesorId: any[] = []; // Store the selected professor ID
+  profesores: any[] = [];
   claseForm: FormGroup;
   carreras: string[] = [
     'Ingeniería Informatica',
@@ -27,6 +26,7 @@ export class ProfesorHomePage implements OnInit {
   ];
   horario: string[] = ['Diurno', 'Vespertino'];
   diaSemana: string[] = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
+  usuario: any = { nombre: '' };
 
   constructor(
     private toastController: ToastController,
@@ -48,7 +48,7 @@ export class ProfesorHomePage implements OnInit {
   async ngOnInit() {
     this.checkIfMobile();
     window.addEventListener('resize', () => this.checkIfMobile());
-    this.selectedProfesorId = this.usuario.id; // Assign the professor's ID
+    this.loadProfesores();
     this.auth.getCurrentUser().subscribe((user) => {
       if (user) {
         this.store.getUserData(user.uid).subscribe((userData: any) => {
@@ -93,13 +93,30 @@ export class ProfesorHomePage implements OnInit {
   loadProfesores() {
     this.store.getProfesores().subscribe(
       (data) => {
-        this.selectedProfesorId = data;
-        console.log('Profesores cargados:', this.selectedProfesorId);
+        this.profesores = data;
+        console.log('Profesores cargados:', this.profesores);
       },
       (error) => {
-        console.error(error);
+        console.error('Error al cargar los profesores:', error);
       }
     );
+  }
+
+  async guardarClase() {
+    if (this.claseForm.valid) {
+      const data = this.claseForm.value;
+      try {
+        const uid = data.profesor;
+        await this.store.saveClassData(uid, data);
+        this.claseForm.reset();
+        this.mostrarMensaje('Clase creada exitosamente.');
+      } catch (error) {
+        console.log(error);
+        this.mostrarMensaje('Ocurrio un error');
+      }
+    } else {
+      this.mostrarMensaje('Por favor complete todos los campos correctamente.');
+    }
   }
 
   async mostrarMensaje(mensaje: string) {

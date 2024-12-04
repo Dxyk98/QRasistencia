@@ -36,7 +36,7 @@
             <div class="row mt-2">
               <div class="col-sm-6">
                 <h2>Formulario de clases</h2>
-                <form [formGroup]="claseForm">
+                <form [formGroup]="claseForm" (ngSubmit)="guardarClase()">
                   <ion-item class="pt-2">
                     <ion-input
                       label="Nombre de la clase"
@@ -119,8 +119,8 @@
                       formControlName="profesor"
                     >
                       <ion-select-option
-                        *ngFor="let profesor of selectedProfesorId"
-                        [value]="{ id: profesor.uid, nombre: profesor.nombre }"
+                        *ngFor="let profesor of profesores"
+                        [value]="profesor.uid"
                       >
                         {{ profesor.nombre }}
                       </ion-select-option>
@@ -140,7 +140,6 @@
                   <ion-list-header>
                     <ion-label>Lista de Clases</ion-label>
                   </ion-list-header>
-                  <p>Bienvenido, {{usuario.nombre}}</p>
                   <!--
                   <ion-item *ngFor="let clase of clases">
                     <ion-label>
@@ -166,12 +165,12 @@
       </ion-modal>
     </ion-header>
     <ion-content class="ion-padding">
-      <h2>Bienvenido, {{ usuario.nombre }}</h2>
       <!-- Relleno -->
       <ion-list>
         <ion-list-header>
           <ion-label>Lista de Clases</ion-label>
         </ion-list-header>
+        <p>Bienvenido, {{usuario.nombre}}</p>
         <!--
         <ion-item *ngFor="let clase of clases">
           <ion-label>
