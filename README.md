@@ -27,6 +27,7 @@ Todo esto para verificar que sus asistencias estén registradas correctamente.
 ## Información
 Esta aplicación se creo con el framework de trabajo Ionic, Angular y Firebase para los servicios de hosting y base de datos.
 Todo esto para poder hacer la aplicación de fácil acceso y responsiva ante los navegadores presentes en la actualidad.
+
 <img src="https://img.icons8.com/?size=100&id=5NOAGB6F7wM4&format=png&color=000000" atl="logoIonic">
 <img src="https://img.icons8.com/?size=100&id=6SWtW8hxZWSo&format=png&color=000000" atl="logoAngular">
 <img src="https://img.icons8.com/?size=100&id=62452&format=png&color=000000" atl="logoAngular">
