@@ -85,9 +85,14 @@ export class HomeStudentPage implements OnInit {
       qrbox: 250,
       supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
     };
+    let isScannig = true;
     this.html5QrCode = new Html5QrcodeScanner('reader', config, true); //Se inicializa el escaner con el ID reader y la configuración determinada. El tercer parámetro 'true' es para habilitar la desactivacion de forma automatica
     this.html5QrCode.render(
       async (result) => {
+        if (!isScannig) {
+          return;
+        }
+        isScannig = false;
         this.scannerResult = result;
         console.log('resultado del scanner', result); //callback de exito, al escanear el código QR exitosamente
         const now = new Date();
@@ -97,7 +102,7 @@ export class HomeStudentPage implements OnInit {
           idAsistencia: asistensId, // Este campo se llenará en el servicio al generar el ID
           idClase: result, // Asume que el resultado del QR es el ID de la clase
           nombreUsuario: this.usuario.nombre, // Asigna el nombre del usuario actual
-          horaAsistencia: new Date(), // Hora actual en formato ISO
+          horaAsistencia: new Date().toDateString, // Hora actual en formato ISO
         };
 
         const asistenciaGuardada = await this.store.saveAsistenciaData(

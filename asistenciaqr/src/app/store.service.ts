@@ -56,6 +56,10 @@ export class StoreService {
     }
   }
 
+  getAllAsistens() {
+    return this.firestore.collection('Asistens').valueChanges();
+  }
+
   getProfesores() {
     return this.firestore
       .collection('Users', (ref) => ref.where('tipoPersona', '==', 'Profesor'))
