@@ -43,6 +43,19 @@ export class StoreService {
     return this.firestore.collectionGroup('Clasees').valueChanges();
   }
 
+  async saveAsistenciaData(classId: string, asistenciaData: any) {
+    try {
+      await this.firestore
+        .collection('Asistens')
+        .doc(classId)
+        .set(asistenciaData);
+      console.log('Datos de clase guardados');
+    } catch (error) {
+      console.error('Error al guardar datos.', error);
+      throw error;
+    }
+  }
+
   getProfesores() {
     return this.firestore
       .collection('Users', (ref) => ref.where('tipoPersona', '==', 'Profesor'))

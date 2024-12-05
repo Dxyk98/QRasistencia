@@ -13,7 +13,8 @@ export class HomeStudentPage implements OnInit {
   private html5QrCode: Html5QrcodeScanner | null = null;
   scannerResult: string | null = null; //string de escaner de QR
   isCameraPermission: boolean = false;
-  usuario: any = { nombre: '' };
+  usuario: any = { nombre: '', carrera: '' };
+  clases: any[] = [];
 
   constructor(
     private toastController: ToastController,
@@ -29,7 +30,10 @@ export class HomeStudentPage implements OnInit {
       if (user) {
         this.store.getUserData(user.uid).subscribe((userData: any) => {
           this.usuario.nombre = userData?.nombre || 'Usuario'; // Asigna el nombre o un valor por defecto
+          this.usuario.carrera = userData?.carrera || 'Carrera';
         });
+
+        this.loadClasses();
       } else {
         this.usuario.nombre = 'Invitado';
       }
@@ -86,18 +90,21 @@ export class HomeStudentPage implements OnInit {
       async (result) => {
         this.scannerResult = result;
         console.log('resultado del scanner', result); //callback de exito, al escanear el código QR exitosamente
+        const now = new Date();
+        const asistensId = now.toISOString();
 
-        //const nuevaAsistencia: Asistencia = {
-        //  idAsistencia: '', // Este campo se llenará en el servicio al generar el ID
-        //  idClase: result, // Asume que el resultado del QR es el ID de la clase
-        //  nombreUsuario: this.usuario.nombre, // Asigna el nombre del usuario actual
-        //  horaAsistencia: new Date().toISOString(), // Hora actual en formato ISO
-        //};
+        const nuevaAsistencia = {
+          idAsistencia: asistensId, // Este campo se llenará en el servicio al generar el ID
+          idClase: result, // Asume que el resultado del QR es el ID de la clase
+          nombreUsuario: this.usuario.nombre, // Asigna el nombre del usuario actual
+          horaAsistencia: new Date(), // Hora actual en formato ISO
+        };
 
-        //const asistenciaGuardada = await this.storageService.agregarAsistencia(
-        //  nuevaAsistencia
-        //);
-        //console.log('Asistencia guardada:', asistenciaGuardada); // Verifica que se haya guardado correctamente
+        const asistenciaGuardada = await this.store.saveAsistenciaData(
+          asistensId,
+          nuevaAsistencia
+        );
+        console.log('Asistencia guardada:', asistenciaGuardada); // Verifica que se haya guardado correctamente
 
         // Muestra un mensaje de éxito
         this.mostrarMensaje('Asistencia guardada exitosamente');
@@ -116,6 +123,18 @@ export class HomeStudentPage implements OnInit {
     }
   }
 
+  loadClasses() {
+    this.store.getAllClasses().subscribe(
+      (data) => {
+        this.clases = data;
+        console.log('Clases cargadas:', this.clases);
+      },
+      (error) => {
+        console.error('Error al cargar las clases:', error);
+      }
+    );
+  }
+
   //mensaje de alerta para ver si esta todo correcto
   async mostrarMensaje(mensaje: string) {
     const toast = await this.toastController.create({
@@ -124,27 +143,4 @@ export class HomeStudentPage implements OnInit {
     });
     toast.present();
   }
-}
-
-//interface clase
-interface Clase {
-  id: string;
-  nombre: string;
-  carreraClase: string;
-  horaInicio: string;
-  horaTermino: string;
-  diurnoVespertino: string;
-  dias: string;
-  profesor: {
-    id: '';
-    nombre: '';
-  };
-}
-
-//interface asistencia
-interface Asistencia {
-  idAsistencia: string;
-  idClase: string;
-  nombreUsuario: string;
-  horaAsistencia: string;
 }
