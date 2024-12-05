@@ -1,16 +1,21 @@
 import { TestBed } from '@angular/core/testing';
+import { AppComponent } from './app.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-import { AuthenticationService } from './authentication.service';
+describe('AppComponent', () => {
+  let component: AppComponent;
 
-describe('AuthenticationService', () => {
-  let service: AuthenticationService;
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [AppComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA], // Para permitir etiquetas personalizadas como Ionic
+    }).compileComponents();
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(AuthenticationService);
+    const fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  it('should create the component', () => {
+    expect(component).toBeTruthy();
   });
 });

@@ -11,7 +11,7 @@ import { StoreService } from '../store.service';
 })
 export class ProfesorHomePage implements OnInit {
   isMobile: boolean = false;
-  qrData: string = '';
+  qrData: string = 'Texto de base';
   createdCode: string = '';
   claseHoy: any; // Propiedad para almacenar la clase de hoy
   claseForm: FormGroup;
