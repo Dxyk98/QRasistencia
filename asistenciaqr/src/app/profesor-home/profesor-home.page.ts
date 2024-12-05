@@ -66,11 +66,11 @@ export class ProfesorHomePage implements OnInit {
     this.isMobile = window.innerWidth < 768;
   }
 
-  //setQrData(clase: Clase) {
-  //  this.qrData = clase.id; // Set the selected class's ID as QR data
-  //  this.generateQrCode(); // Generate the QR code based on the selected class's ID
-  //  this.setOpen(true); // Open the modal
-  //}
+  setQrData(clases: any) {
+    this.qrData = clases.id; // Set the selected class's ID as QR data
+    this.generateQrCode(); // Generate the QR code based on the selected class's ID
+    this.setOpen(true); // Open the modal
+  }
 
   generateQrCode() {
     if (this.qrData) {
@@ -108,8 +108,17 @@ export class ProfesorHomePage implements OnInit {
     if (this.claseForm.valid) {
       const data = this.claseForm.value;
       try {
+        const now = new Date();
+        const classId = now.toISOString();
+
+        const classData = {
+          ...data,
+          id: classId,
+          createAt: now,
+        };
+
         const uid = data.profesor;
-        await this.store.saveClassData(uid, data);
+        await this.store.saveClassData(uid, classData);
         this.claseForm.reset();
         this.mostrarMensaje('Clase creada exitosamente.');
       } catch (error) {

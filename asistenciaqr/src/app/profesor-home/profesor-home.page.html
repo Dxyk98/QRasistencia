@@ -172,7 +172,7 @@
             <p>Horario: {{ clase.horaInicio }} - {{ clase.horaTermino }}</p>
             <p>Jornada: {{ clase.diurnoVespertino }}</p>
             <p>Día(s): {{ clase.dias }}</p>
-            <!--<ion-button (click)="setQrData(clase)">Generar QR</ion-button>-->
+            <ion-button (click)="setQrData(clase)">Generar QR</ion-button>
           </ion-label>
           <ion-modal [isOpen]="isModalOpen">
             <ng-template class="d-flex-center">
