@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 
 @Component({
-  selector: 'app-student',
-  templateUrl: './student.page.html',
-  styleUrls: ['./student.page.scss'],
+    selector: 'app-student',
+    templateUrl: './student.page.html',
+    styleUrls: ['./student.page.scss'],
+    standalone: false
 })
 export class StudentPage implements OnInit {
   isMobile: boolean = true;

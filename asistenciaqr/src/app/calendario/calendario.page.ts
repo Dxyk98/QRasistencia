@@ -4,9 +4,10 @@ import { StoreService } from '../store.service';
 import { AuthenticationService } from '../authentication.service';
 
 @Component({
-  selector: 'app-calendario',
-  templateUrl: './calendario.page.html',
-  styleUrls: ['./calendario.page.scss'],
+    selector: 'app-calendario',
+    templateUrl: './calendario.page.html',
+    styleUrls: ['./calendario.page.scss'],
+    standalone: false
 })
 export class CalendarioPage implements OnInit {
   constructor(

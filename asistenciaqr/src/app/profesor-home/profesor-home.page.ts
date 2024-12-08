@@ -5,9 +5,10 @@ import { AuthenticationService } from '../authentication.service';
 import { StoreService } from '../store.service';
 
 @Component({
-  selector: 'app-profesor-home',
-  templateUrl: './profesor-home.page.html',
-  styleUrls: ['./profesor-home.page.scss'],
+    selector: 'app-profesor-home',
+    templateUrl: './profesor-home.page.html',
+    styleUrls: ['./profesor-home.page.scss'],
+    standalone: false
 })
 export class ProfesorHomePage implements OnInit {
   isMobile: boolean = false;

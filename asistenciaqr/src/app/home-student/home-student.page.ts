@@ -5,9 +5,10 @@ import { AuthenticationService } from '../authentication.service';
 import { StoreService } from '../store.service';
 
 @Component({
-  selector: 'app-home-student',
-  templateUrl: './home-student.page.html',
-  styleUrls: ['./home-student.page.scss'],
+    selector: 'app-home-student',
+    templateUrl: './home-student.page.html',
+    styleUrls: ['./home-student.page.scss'],
+    standalone: false
 })
 export class HomeStudentPage implements OnInit {
   private html5QrCode: Html5QrcodeScanner | null = null;

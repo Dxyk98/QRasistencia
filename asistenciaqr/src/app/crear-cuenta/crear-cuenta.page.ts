@@ -6,9 +6,10 @@ import { StoreService } from '../store.service';
 import { Route, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-crear-cuenta',
-  templateUrl: './crear-cuenta.page.html',
-  styleUrls: ['./crear-cuenta.page.scss'],
+    selector: 'app-crear-cuenta',
+    templateUrl: './crear-cuenta.page.html',
+    styleUrls: ['./crear-cuenta.page.scss'],
+    standalone: false
 })
 export class CrearCuentaPage implements OnInit {
   personaForm: FormGroup;

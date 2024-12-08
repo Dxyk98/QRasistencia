@@ -5,9 +5,10 @@ import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-recuperar',
-  templateUrl: './recuperar.page.html',
-  styleUrls: ['./recuperar.page.scss'],
+    selector: 'app-recuperar',
+    templateUrl: './recuperar.page.html',
+    styleUrls: ['./recuperar.page.scss'],
+    standalone: false
 })
 export class RecuperarPage implements OnInit {
   recuperarForm!: FormGroup;

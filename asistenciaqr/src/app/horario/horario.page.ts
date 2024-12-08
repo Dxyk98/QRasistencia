@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-horario',
-  templateUrl: './horario.page.html',
-  styleUrls: ['./horario.page.scss'],
+    selector: 'app-horario',
+    templateUrl: './horario.page.html',
+    styleUrls: ['./horario.page.scss'],
+    standalone: false
 })
 export class HorarioPage implements OnInit {
   constructor(private toastController: ToastController) {}
