@@ -22,6 +22,8 @@ export class CrearCuentaPage implements OnInit {
   ];
   tipo: string[] = ['Alumno', 'Profesor'];
   horario: string[] = ['Diurno', 'Vespertino'];
+  mostrarHorario = false;
+  placeholderCorreo = 'correo@duocuc.cl | correo@profesor.duoc.cl';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -58,8 +60,10 @@ export class CrearCuentaPage implements OnInit {
       try {
         // Paso 1: Registrar al usuario en Firebase Authentication
         const uid = await this.auth.register(email, contrasena);
+
+        const dataWithUid = { ...additionalData, uid };
         // Paso 2: Guardar los datos adicionales en Firestore
-        await this.store.saveUserData(uid, additionalData);
+        await this.store.saveUserData(uid, dataWithUid);
         // Mostrar mensaje de éxito
         this.mostrarMensaje('Cuenta creada exitosamente.');
         setTimeout(() => {
@@ -71,6 +75,20 @@ export class CrearCuentaPage implements OnInit {
     } else {
       this.mostrarMensaje('Por favor complete todos los campos correctamente.');
     }
+  }
+
+  onTipoPersonaChange(event: any) {
+    const tipoPersona = event.detail.value;
+    if (tipoPersona === 'Alumno') {
+      this.mostrarHorario = true;
+      this.placeholderCorreo = 'correo@duocuc.cl';
+      this.personaForm.get('horario')?.setValidators(Validators.required);
+    } else if (tipoPersona === 'Profesor') {
+      this.mostrarHorario = false;
+      this.placeholderCorreo = 'correo@profesor.duoc.cl';
+      this.personaForm.get('horario')?.clearValidators();
+    }
+    this.personaForm.get('horario')?.updateValueAndValidity();
   }
 
   //mensaje de alerta para ver si esta todo correcto

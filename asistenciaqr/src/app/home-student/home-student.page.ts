@@ -13,7 +13,7 @@ export class HomeStudentPage implements OnInit {
   private html5QrCode: Html5QrcodeScanner | null = null;
   scannerResult: string | null = null; //string de escaner de QR
   isCameraPermission: boolean = false;
-  usuario: any = { nombre: '', carrera: '' };
+  usuario: any = { nombre: '', carrera: '', userId: '' };
   clases: any[] = [];
 
   constructor(
@@ -31,6 +31,7 @@ export class HomeStudentPage implements OnInit {
         this.store.getUserData(user.uid).subscribe((userData: any) => {
           this.usuario.nombre = userData?.nombre || 'Usuario'; // Asigna el nombre o un valor por defecto
           this.usuario.carrera = userData?.carrera || 'Carrera';
+          this.usuario.userId = userData?.uid || 'Id';
         });
 
         this.loadClasses();
@@ -102,6 +103,7 @@ export class HomeStudentPage implements OnInit {
           idAsistencia: asistensId, // Este campo se llenará en el servicio al generar el ID
           idClase: result, // Asume que el resultado del QR es el ID de la clase
           nombreUsuario: this.usuario.nombre, // Asigna el nombre del usuario actual
+          idUsuario: this.usuario.userId, //Se asigna id del usuario para poder crear la consulta.
           horaAsistencia: new Date().toISOString(), // Hora actual en formato ISO
         };
 

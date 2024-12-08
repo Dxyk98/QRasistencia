@@ -15,7 +15,7 @@ export class CalendarioPage implements OnInit {
     private store: StoreService
   ) {}
   asistencia: any[] = [];
-  usuario: any = { nombre: '', carrera: '' };
+  usuario: any = { nombre: '', carrera: '', id: '' };
 
   async ngOnInit() {
     //se llama al servicio publico
@@ -26,20 +26,21 @@ export class CalendarioPage implements OnInit {
         this.store.getUserData(user.uid).subscribe((userData: any) => {
           this.usuario.nombre = userData?.nombre || 'Usuario'; // Asigna el nombre o un valor por defecto
           this.usuario.carrera = userData?.carrera || 'Carrera';
+          this.usuario.id = userData?.uid || 'Id';
         });
       } else {
         this.usuario.nombre = 'Invitado';
       }
     });
-    this.store.getAllAsistens().subscribe(
-      (asistencias: any[]) => {
-        this.asistencia = asistencias; // Guardar los datos obtenidos
-        console.log('Asistencias obtenidas:', this.asistencia);
+    this.store.getAsistencias(this.usuario.id).subscribe({
+      next: (asistencias) => {
+        console.log('Asistencias:', asistencias);
+        this.asistencia = asistencias; // Guarda las asistencias para mostrarlas en la interfaz
       },
-      (error) => {
-        console.error('Error al obtener las asistencias:', error);
-      }
-    );
+      error: (error) => {
+        console.error('Error al obtener las asistencias:', error.message);
+      },
+    });
   }
 
   isMobile: boolean = true;
