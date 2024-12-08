@@ -36,12 +36,27 @@ export class StoreService {
     }
   }
 
-  getClassData(uid: string) {
-    return this.firestore.collection('Clasees').doc(uid).valueChanges();
-  }
-
   getAllClasses() {
     return this.firestore.collectionGroup('Clasees').valueChanges();
+  }
+
+  //Filtro solo por diurnoVespertino
+  getFilterClasses(horario: string) {
+    return this.firestore
+      .collectionGroup('Clasees', (ref) =>
+        ref.where('diurnoVespertino', '==', horario)
+      )
+      .valueChanges();
+  }
+
+  getFilteredClasses(horario: string, carrera: string) {
+    return this.firestore
+      .collectionGroup('Clasees', (ref) =>
+        ref
+          .where('diurnoVespertino', '==', horario)
+          .where('carreraClase', '==', carrera)
+      )
+      .valueChanges();
   }
 
   async saveAsistenciaData(classId: string, asistenciaData: any) {

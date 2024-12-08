@@ -13,7 +13,7 @@ export class HomeStudentPage implements OnInit {
   private html5QrCode: Html5QrcodeScanner | null = null;
   scannerResult: string | null = null; //string de escaner de QR
   isCameraPermission: boolean = false;
-  usuario: any = { nombre: '', carrera: '', userId: '' };
+  usuario: any = { nombre: '', carrera: '', userId: '', horario: '' };
   clases: any[] = [];
 
   constructor(
@@ -32,9 +32,9 @@ export class HomeStudentPage implements OnInit {
           this.usuario.nombre = userData?.nombre || 'Usuario'; // Asigna el nombre o un valor por defecto
           this.usuario.carrera = userData?.carrera || 'Carrera';
           this.usuario.userId = userData?.uid || 'Id';
+          this.usuario.horario = userData?.horario || 'Horario';
+          this.loadClasses();
         });
-
-        this.loadClasses();
       } else {
         this.usuario.nombre = 'Invitado';
       }
@@ -131,15 +131,23 @@ export class HomeStudentPage implements OnInit {
   }
 
   loadClasses() {
-    this.store.getAllClasses().subscribe(
-      (data) => {
-        this.clases = data;
-        console.log('Clases cargadas:', this.clases);
-      },
-      (error) => {
-        console.error('Error al cargar las clases:', error);
-      }
-    );
+    console.log('Horario del usuario:', this.usuario.horario); // Verifica el valor de horario
+    console.log('Carrera del usuario:', this.usuario.carrera); // Verifica el valor de carrera
+    if (this.usuario.horario && this.usuario.carrera) {
+      this.store
+        .getFilteredClasses(this.usuario.horario, this.usuario.carrera)
+        .subscribe(
+          (clases: any[]) => {
+            console.log('Clases recibidas desde Firestore:', clases); // Verifica los datos recibidos
+            this.clases = clases; // Asigna las clases filtradas
+          },
+          (error) => {
+            console.error('Error al cargar clases:', error);
+          }
+        );
+    } else {
+      console.warn('Horario o carrera no definidos para el usuario');
+    }
   }
 
   //mensaje de alerta para ver si esta todo correcto
