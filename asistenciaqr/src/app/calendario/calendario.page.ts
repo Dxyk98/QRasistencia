@@ -4,10 +4,10 @@ import { StoreService } from '../store.service';
 import { AuthenticationService } from '../authentication.service';
 
 @Component({
-    selector: 'app-calendario',
-    templateUrl: './calendario.page.html',
-    styleUrls: ['./calendario.page.scss'],
-    standalone: false
+  selector: 'app-calendario',
+  templateUrl: './calendario.page.html',
+  styleUrls: ['./calendario.page.scss'],
+  standalone: false,
 })
 export class CalendarioPage implements OnInit {
   constructor(
@@ -28,12 +28,21 @@ export class CalendarioPage implements OnInit {
           this.usuario.nombre = userData?.nombre || 'Usuario'; // Asigna el nombre o un valor por defecto
           this.usuario.carrera = userData?.carrera || 'Carrera';
           this.usuario.id = userData?.uid || 'Id';
+          this.loadAsistencia(this.usuario.id);
         });
       } else {
         this.usuario.nombre = 'Invitado';
       }
     });
-    this.store.getAsistencias(this.usuario.id).subscribe({
+  }
+
+  isMobile: boolean = true;
+  private checkIfMobile() {
+    this.isMobile = window.innerWidth < 768;
+  }
+
+  loadAsistencia(uid: string) {
+    this.store.getAsistencias(uid).subscribe({
       next: (asistencias) => {
         console.log('Asistencias:', asistencias);
         this.asistencia = asistencias; // Guarda las asistencias para mostrarlas en la interfaz
@@ -42,11 +51,6 @@ export class CalendarioPage implements OnInit {
         console.error('Error al obtener las asistencias:', error.message);
       },
     });
-  }
-
-  isMobile: boolean = true;
-  private checkIfMobile() {
-    this.isMobile = window.innerWidth < 768;
   }
 
   //mensaje de alerta para ver si esta todo correcto

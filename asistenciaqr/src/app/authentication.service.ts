@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'platform',
 })
 export class AuthenticationService {
   private allowedDomians = ['@duocuc.cl', '@profesor.duoc.cl'];

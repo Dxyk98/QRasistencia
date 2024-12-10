@@ -4,7 +4,6 @@ import { IonicModule } from '@ionic/angular';
 import { CrearCuentaPage } from './crear-cuenta.page';
 import { AuthenticationService } from '../authentication.service';
 import { StoreService } from '../store.service';
-import { of } from 'rxjs';
 
 describe('CrearCuentaPage', () => {
   let component: CrearCuentaPage;

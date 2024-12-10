@@ -13,6 +13,7 @@
     </ion-header>
   </div>
   <ion-content class="ion-padding">
+    <h2>Usuario: {{ usuario.nombre }}</h2>
     <ion-card *ngFor="let asis of asistencia">
       <ion-card-header>
         <ion-card-subtitle> {{ asis.idAsistencia }} </ion-card-subtitle>

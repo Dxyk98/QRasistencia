@@ -3,13 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
 import { AuthenticationService } from '../authentication.service';
 import { StoreService } from '../store.service';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-crear-cuenta',
-    templateUrl: './crear-cuenta.page.html',
-    styleUrls: ['./crear-cuenta.page.scss'],
-    standalone: false
+  selector: 'app-crear-cuenta',
+  templateUrl: './crear-cuenta.page.html',
+  styleUrls: ['./crear-cuenta.page.scss'],
+  standalone: false,
 })
 export class CrearCuentaPage implements OnInit {
   personaForm: FormGroup;

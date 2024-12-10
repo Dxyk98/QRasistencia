@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { catchError, throwError } from 'rxjs';
-
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'platform',
 })
 export class StoreService {
   constructor(private firestore: AngularFirestore) {}
@@ -83,8 +82,9 @@ export class StoreService {
   }
 
   getAsistencias(uid: string) {
+    console.log('Consultando asistencias con uid: ', uid);
     return this.firestore
-      .collection('Asistens', (ref) => ref.where('uid', '==', uid))
+      .collection('Asistens', (ref) => ref.where('idUsuario', '==', uid))
       .valueChanges()
       .pipe(
         catchError((error) => {

@@ -5,13 +5,17 @@
 export const environment = {
   production: false,
   firebaseConfig: {
-    apiKey: 'AIzaSyCbfLnCuOC3fQ4j4kzHfrmgU46-ihT5Htg',
-    authDomain: 'asistenciaqr-92cb9.firebaseapp.com',
-    databaseURL: 'https://asistenciaqr-92cb9-default-rtdb.firebaseio.com',
-    projectId: 'asistenciaqr-92cb9',
-    storageBucket: 'asistenciaqr-92cb9.firebasestorage.app',
-    messagingSenderId: '714528683074',
-    appId: '1:714528683074:web:af3d0cb9b25941d45ca9db',
+    apiKey: 'AIzaSyCkXsuyaZgLyg20nOlx7KYoxdFe-qfreC0',
+
+    authDomain: 'asistenciaqr-33651.firebaseapp.com',
+
+    projectId: 'asistenciaqr-33651',
+
+    storageBucket: 'asistenciaqr-33651.firebasestorage.app',
+
+    messagingSenderId: '872636596605',
+
+    appId: '1:872636596605:web:c261c798b303cdf5074c14',
   },
 };
 
